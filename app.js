@@ -2,6 +2,8 @@ import { openDB } from 'idb';
 
 const SPREADSHEET_ID = '1le9NYAVt_sV71HmxfDgAfZeT5H9EUsbTL_Aa_ENULmk';
 const API_KEY = 'AIzaSyAjbkv8dNSWYM34UlX7P-brMUITNfWiS3g';
+const CLIENT_ID = '390383140785-vl787e78slmatulaq5cd0r4kp40lhg4h.apps.googleusercontent.com';
+const SCOPES = 'https://www.googleapis.com/auth/spreadsheets';
 
 class JugadoresDB {
     constructor() {
@@ -60,7 +62,7 @@ class FaceRecognitionManager {
 
     async compararRostros(descriptor1, descriptor2) {
         const distancia = faceapi.euclideanDistance(descriptor1, descriptor2);
-        return distancia < 0.6;
+        return distancia < 0.6; // umbral de similitud
     }
 }
 
@@ -70,34 +72,43 @@ class GoogleSheetsManager {
         this.initializeGoogleAPI();
     }
 
-    initializeGoogleAPI() {
-        gapi.load('client', async () => {
-            try {
-                await gapi.client.init({
-                    'apiKey': API_KEY,
-                    'discoveryDocs': ["https://sheets.googleapis.com/$discovery/rest?version=v4"],
-                });
-                this.isInitialized = true;
-            } catch (error) {
-                console.error('Error initializing Google API client:', error);
-                alert(`Error al inicializar el cliente API: ${error.message || 'Error desconocido'}`);
-            }
+    async initializeGoogleAPI() {
+        await new Promise((resolve) => gapi.load('client:auth2', resolve));
+        await gapi.client.init({
+            apiKey: API_KEY,
+            clientId: CLIENT_ID,
+            scope: SCOPES,
+            discoveryDocs: ['https://sheets.googleapis.com/$discovery/rest?version=v4']
         });
+
+        this.isInitialized = true;
+    }
+
+    async signIn() {
+        if (!this.isInitialized) {
+            await this.initializeGoogleAPI();
+        }
+        await gapi.auth2.getAuthInstance().signIn();
     }
 
     async appendRow(jugador) {
-        const response = await fetch('https://script.google.com/macros/s/AKfycbxBIAogbOph8RyuGpc5Azatmit38IbNPllX3xY5cuRTkGQ7mtH45XT7KTSv4i5CqOg/exec', {
-            method: 'POST',
-            body: JSON.stringify(jugador),
-            headers: {
-                'Content-Type': 'application/json'
-            }
+        const values = [
+            [
+                jugador.apellido,
+                jugador.nombres,
+                jugador.dni,
+                jugador.fechaNacimiento,
+                jugador.club,
+                JSON.stringify(jugador.descriptorFacial)
+            ]
+        ];
+
+        await gapi.client.sheets.spreadsheets.values.append({
+            spreadsheetId: SPREADSHEET_ID,
+            range: 'Jugadores!A:F',
+            valueInputOption: 'RAW',
+            resource: { values }
         });
-    
-        const texto = await response.text();
-        if (!response.ok || texto !== 'OK') {
-            throw new Error('Error al guardar en Google Sheets: ' + texto);
-        }
     }
 
     async loadAllRows() {
@@ -132,7 +143,7 @@ class App {
         try {
             const constraints = {
                 video: {
-                    facingMode: { exact: "environment" },
+                    facingMode: { exact: "environment" }, // Usar cámara trasera
                     width: { ideal: 1920 },
                     height: { ideal: 1080 }
                 }
@@ -143,12 +154,13 @@ class App {
                 document.getElementById('videoRegistro').srcObject = stream;
                 document.getElementById('videoVerificacion').srcObject = stream.clone();
             } catch (error) {
+                // Si falla la cámara trasera, intentar con cualquier cámara disponible
                 console.log('Fallback a cámara frontal:', error);
-                const stream = await navigator.mediaDevices.getUserMedia({
-                    video: {
+                const stream = await navigator.mediaDevices.getUserMedia({ 
+                    video: { 
                         width: { ideal: 1920 },
                         height: { ideal: 1080 }
-                    }
+                    } 
                 });
                 document.getElementById('videoRegistro').srcObject = stream;
                 document.getElementById('videoVerificacion').srcObject = stream.clone();
@@ -179,10 +191,10 @@ class App {
         try {
             const estadoFoto = document.getElementById('estadoFoto');
             estadoFoto.textContent = 'Procesando...';
-
+            
             const video = document.getElementById('videoRegistro');
             this.descriptorActual = await this.faceManager.obtenerDescriptor(video);
-
+            
             estadoFoto.textContent = 'Foto capturada correctamente';
             estadoFoto.style.color = 'green';
         } catch (error) {
@@ -193,6 +205,7 @@ class App {
 
     async cargarDatosIniciales() {
         try {
+            await this.sheetsManager.signIn();
             const jugadores = await this.sheetsManager.loadAllRows();
             for (const jugador of jugadores) {
                 await this.db.guardarJugador(jugador);
@@ -204,7 +217,7 @@ class App {
 
     async registrarJugador(e) {
         e.preventDefault();
-
+        
         /*if (!this.descriptorActual) {
             alert('Por favor tome una foto antes de registrar');
             return;
@@ -216,7 +229,7 @@ class App {
             dni: document.getElementById('dni').value,
             fechaNacimiento: document.getElementById('fechaNacimiento').value,
             club: document.getElementById('club').value,
-            //descriptorFacial: Array.from(this.descriptorActual)
+           // descriptorFacial: Array.from(this.descriptorActual)
         };
 
         try {
@@ -239,7 +252,7 @@ class App {
 
             const video = document.getElementById('videoVerificacion');
             const descriptorVerificacion = await this.faceManager.obtenerDescriptor(video);
-
+            
             const jugadores = await this.db.obtenerTodosJugadores();
             let jugadorEncontrado = null;
 
