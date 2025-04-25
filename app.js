@@ -57,7 +57,7 @@ class FaceRecognitionManager {
 
     async compararRostros(descriptor1, descriptor2) {
         const distancia = faceapi.euclideanDistance(descriptor1, descriptor2);
-        return distancia < 0.6;
+        return distancia < 0.6; // umbral de similitud
     }
 }
 
@@ -74,7 +74,7 @@ class App {
         try {
             const constraints = {
                 video: {
-                    facingMode: { exact: "environment" },
+                    facingMode: { exact: "environment" }, // Usar cámara trasera
                     width: { ideal: 1920 },
                     height: { ideal: 1080 }
                 }
@@ -85,12 +85,13 @@ class App {
                 document.getElementById('videoRegistro').srcObject = stream;
                 document.getElementById('videoVerificacion').srcObject = stream.clone();
             } catch (error) {
+                // Si falla la cámara trasera, intentar con cualquier cámara disponible
                 console.log('Fallback a cámara frontal:', error);
-                const stream = await navigator.mediaDevices.getUserMedia({
-                    video: {
+                const stream = await navigator.mediaDevices.getUserMedia({ 
+                    video: { 
                         width: { ideal: 1920 },
                         height: { ideal: 1080 }
-                    }
+                    } 
                 });
                 document.getElementById('videoRegistro').srcObject = stream;
                 document.getElementById('videoVerificacion').srcObject = stream.clone();
@@ -121,10 +122,10 @@ class App {
         try {
             const estadoFoto = document.getElementById('estadoFoto');
             estadoFoto.textContent = 'Procesando...';
-
+            
             const video = document.getElementById('videoRegistro');
             this.descriptorActual = await this.faceManager.obtenerDescriptor(video);
-
+            
             estadoFoto.textContent = 'Foto capturada correctamente';
             estadoFoto.style.color = 'green';
         } catch (error) {
@@ -135,7 +136,7 @@ class App {
 
     async registrarJugador(e) {
         e.preventDefault();
-
+        
         if (!this.descriptorActual) {
             alert('Por favor tome una foto antes de registrar');
             return;
@@ -169,7 +170,7 @@ class App {
 
             const video = document.getElementById('videoVerificacion');
             const descriptorVerificacion = await this.faceManager.obtenerDescriptor(video);
-
+            
             const jugadores = await this.db.obtenerTodosJugadores();
             let jugadorEncontrado = null;
 
