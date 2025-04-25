@@ -1,0 +1,88 @@
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistema de Registro de Jugadores</title>
+    <link rel="stylesheet" href="styles.css">
+    <script type="importmap">
+    {
+        "imports": {
+            "idb": "https://cdn.jsdelivr.net/npm/idb@7/+esm"
+        }
+    }
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/face-api.js@0.22.2/dist/face-api.min.js"></script>
+    <script src="https://apis.google.com/js/api.js"></script>
+    <script src="https://accounts.google.com/gsi/client"></script>
+    <script src="app.js" type="module"></script>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Sistema de Registro de Jugadores</h1>
+            <nav>
+                <button id="btnRegistro" class="tab-btn active">Registro</button>
+                <button id="btnVerificacion" class="tab-btn">Verificación</button>
+            </nav>
+        </header>
+
+        <main>
+            <!-- Sección de Registro -->
+            <section id="seccionRegistro" class="active">
+                <h2>Registro de Nuevo Jugador</h2>
+                <form id="formRegistro">
+                    <div class="form-group">
+                        <label for="apellido">Apellido:</label>
+                        <input type="text" id="apellido" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="nombres">Nombres:</label>
+                        <input type="text" id="nombres" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="dni">DNI:</label>
+                        <input type="text" id="dni" pattern="[0-9]{8}" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="fechaNacimiento">Fecha de Nacimiento:</label>
+                        <input type="date" id="fechaNacimiento" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="club">Club:</label>
+                        <input type="text" id="club" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Foto del Rostro:</label>
+                        <div class="camera-container">
+                            <video id="videoRegistro" autoplay muted></video>
+                            <canvas id="canvasRegistro" style="display: none;"></canvas>
+                            <button type="button" id="btnTomarFoto" class="btn-scan">
+                                Tomar Foto
+                            </button>
+                        </div>
+                        <div id="estadoFoto" class="photo-status">
+                            No se ha tomado la foto
+                        </div>
+                    </div>
+                    <button type="submit" class="btn-primary">Registrar Jugador</button>
+                </form>
+            </section>
+
+            <!-- Sección de Verificación -->
+            <section id="seccionVerificacion">
+                <h2>Verificación de Jugador</h2>
+                <div class="verification-container">
+                    <video id="videoVerificacion" autoplay muted></video>
+                    <canvas id="canvasVerificacion" style="display: none;"></canvas>
+                    <button id="btnVerificarRostro" class="btn-scan">
+                        Verificar Identidad
+                    </button>
+                    <div id="resultadoVerificacion" class="verification-result">
+                        Esperando verificación...
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+</body>
+</html>
