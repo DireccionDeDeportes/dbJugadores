@@ -1,10 +1,5 @@
 import { openDB } from 'idb';
 
-const SPREADSHEET_ID = '1le9NYAVt_sV71HmxfDgAfZeT5H9EUsbTL_Aa_ENULmk';
-const API_KEY = 'AIzaSyAjbkv8dNSWYM34UlX7P-brMUITNfWiS3g';
-const CLIENT_ID = '390383140785-vl787e78slmatulaq5cd0r4kp40lhg4h.apps.googleusercontent.com';
-const SCOPES = 'https://www.googleapis.com/auth/spreadsheets';
-
 class JugadoresDB {
     constructor() {
         this.dbPromise = this.initDB();
@@ -62,69 +57,7 @@ class FaceRecognitionManager {
 
     async compararRostros(descriptor1, descriptor2) {
         const distancia = faceapi.euclideanDistance(descriptor1, descriptor2);
-        return distancia < 0.6; // umbral de similitud
-    }
-}
-
-class GoogleSheetsManager {
-    constructor() {
-        this.isInitialized = false;
-        this.initializeGoogleAPI();
-    }
-
-    async initializeGoogleAPI() {
-        await new Promise((resolve) => gapi.load('client:auth2', resolve));
-        await gapi.client.init({
-            apiKey: API_KEY,
-            clientId: CLIENT_ID,
-            scope: SCOPES,
-            discoveryDocs: ['https://sheets.googleapis.com/$discovery/rest?version=v4']
-        });
-
-        this.isInitialized = true;
-    }
-
-    async signIn() {
-        if (!this.isInitialized) {
-            await this.initializeGoogleAPI();
-        }
-        await gapi.auth2.getAuthInstance().signIn();
-    }
-
-    async appendRow(jugador) {
-        const values = [
-            [
-                jugador.apellido,
-                jugador.nombres,
-                jugador.dni,
-                jugador.fechaNacimiento,
-                jugador.club,
-                JSON.stringify(jugador.descriptorFacial)
-            ]
-        ];
-
-        await gapi.client.sheets.spreadsheets.values.append({
-            spreadsheetId: SPREADSHEET_ID,
-            range: 'Jugadores!A:F',
-            valueInputOption: 'RAW',
-            resource: { values }
-        });
-    }
-
-    async loadAllRows() {
-        const response = await gapi.client.sheets.spreadsheets.values.get({
-            spreadsheetId: SPREADSHEET_ID,
-            range: 'Jugadores!A:F',
-        });
-
-        return response.result.values?.slice(1).map(row => ({
-            apellido: row[0],
-            nombres: row[1],
-            dni: row[2],
-            fechaNacimiento: row[3],
-            club: row[4],
-            descriptorFacial: JSON.parse(row[5])
-        })) || [];
+        return distancia < 0.6;
     }
 }
 
@@ -132,18 +65,16 @@ class App {
     constructor() {
         this.db = new JugadoresDB();
         this.faceManager = new FaceRecognitionManager();
-        this.sheetsManager = new GoogleSheetsManager();
         this.setupEventListeners();
         this.descriptorActual = null;
         this.iniciarCamaras();
-        this.cargarDatosIniciales();
     }
 
     async iniciarCamaras() {
         try {
             const constraints = {
                 video: {
-                    facingMode: { exact: "environment" }, // Usar cámara trasera
+                    facingMode: { exact: "environment" },
                     width: { ideal: 1920 },
                     height: { ideal: 1080 }
                 }
@@ -154,13 +85,12 @@ class App {
                 document.getElementById('videoRegistro').srcObject = stream;
                 document.getElementById('videoVerificacion').srcObject = stream.clone();
             } catch (error) {
-                // Si falla la cámara trasera, intentar con cualquier cámara disponible
                 console.log('Fallback a cámara frontal:', error);
-                const stream = await navigator.mediaDevices.getUserMedia({ 
-                    video: { 
+                const stream = await navigator.mediaDevices.getUserMedia({
+                    video: {
                         width: { ideal: 1920 },
                         height: { ideal: 1080 }
-                    } 
+                    }
                 });
                 document.getElementById('videoRegistro').srcObject = stream;
                 document.getElementById('videoVerificacion').srcObject = stream.clone();
@@ -191,10 +121,10 @@ class App {
         try {
             const estadoFoto = document.getElementById('estadoFoto');
             estadoFoto.textContent = 'Procesando...';
-            
+
             const video = document.getElementById('videoRegistro');
             this.descriptorActual = await this.faceManager.obtenerDescriptor(video);
-            
+
             estadoFoto.textContent = 'Foto capturada correctamente';
             estadoFoto.style.color = 'green';
         } catch (error) {
@@ -203,25 +133,13 @@ class App {
         }
     }
 
-    async cargarDatosIniciales() {
-        try {
-            await this.sheetsManager.signIn();
-            const jugadores = await this.sheetsManager.loadAllRows();
-            for (const jugador of jugadores) {
-                await this.db.guardarJugador(jugador);
-            }
-        } catch (error) {
-            console.error('Error al cargar datos iniciales:', error);
-        }
-    }
-
     async registrarJugador(e) {
         e.preventDefault();
-        
-        /*if (!this.descriptorActual) {
+
+        if (!this.descriptorActual) {
             alert('Por favor tome una foto antes de registrar');
             return;
-        }*/
+        }
 
         const jugador = {
             apellido: document.getElementById('apellido').value,
@@ -229,12 +147,11 @@ class App {
             dni: document.getElementById('dni').value,
             fechaNacimiento: document.getElementById('fechaNacimiento').value,
             club: document.getElementById('club').value,
-           // descriptorFacial: Array.from(this.descriptorActual)
+            descriptorFacial: Array.from(this.descriptorActual)
         };
 
         try {
             await this.db.guardarJugador(jugador);
-            await this.sheetsManager.appendRow(jugador);
             alert('Jugador registrado exitosamente');
             e.target.reset();
             this.descriptorActual = null;
@@ -252,7 +169,7 @@ class App {
 
             const video = document.getElementById('videoVerificacion');
             const descriptorVerificacion = await this.faceManager.obtenerDescriptor(video);
-            
+
             const jugadores = await this.db.obtenerTodosJugadores();
             let jugadorEncontrado = null;
 
