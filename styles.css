@@ -159,6 +159,16 @@ video {
     text-align: center;
 }
 
+.data-management {
+    padding: 20px;
+    background-color: #f8f9fa;
+    border-radius: var(--border-radius);
+}
+
+.file-input {
+    margin-bottom: 10px;
+}
+
 @media (max-width: 480px) {
     .container {
         padding: 10px;

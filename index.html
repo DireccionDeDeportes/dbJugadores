@@ -21,6 +21,7 @@
             <nav>
                 <button id="btnRegistro" class="tab-btn active">Registro</button>
                 <button id="btnVerificacion" class="tab-btn">Verificación</button>
+                <button id="btnDatos" class="tab-btn">Gestión de Datos</button>
             </nav>
         </header>
 
@@ -77,6 +78,21 @@
                     </button>
                     <div id="resultadoVerificacion" class="verification-result">
                         Esperando verificación...
+                    </div>
+                </div>
+            </section>
+
+            <!-- Nueva Sección de Gestión de Datos -->
+            <section id="seccionDatos">
+                <h2>Gestión de Datos</h2>
+                <div class="data-management">
+                    <div class="form-group">
+                        <button id="btnExportar" class="btn-primary">Exportar Datos</button>
+                    </div>
+                    <div class="form-group">
+                        <label for="fileImport">Importar Datos:</label>
+                        <input type="file" id="fileImport" accept=".json" class="file-input">
+                        <button id="btnImportar" class="btn-primary">Importar</button>
                     </div>
                 </div>
             </section>

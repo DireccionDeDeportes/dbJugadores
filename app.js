@@ -24,6 +24,22 @@ class JugadoresDB {
         const db = await this.dbPromise;
         return await db.getAll('jugadores');
     }
+
+    async importarJugadores(jugadores) {
+        const db = await this.dbPromise;
+        const tx = db.transaction('jugadores', 'readwrite');
+        const store = tx.objectStore('jugadores');
+        
+        // Limpiar datos existentes
+        await store.clear();
+        
+        // Importar nuevos datos
+        for (const jugador of jugadores) {
+            await store.add(jugador);
+        }
+        
+        await tx.done;
+    }
 }
 
 class FaceRecognitionManager {
@@ -108,6 +124,9 @@ class App {
         document.getElementById('btnTomarFoto').addEventListener('click', () => this.tomarFoto());
         document.getElementById('formRegistro').addEventListener('submit', (e) => this.registrarJugador(e));
         document.getElementById('btnVerificarRostro').addEventListener('click', () => this.verificarRostro());
+        document.getElementById('btnDatos').addEventListener('click', () => this.cambiarTab('Datos'));
+        document.getElementById('btnExportar').addEventListener('click', () => this.exportarDatos());
+        document.getElementById('btnImportar').addEventListener('click', () => this.importarDatos());
     }
 
     cambiarTab(tab) {
@@ -199,6 +218,53 @@ class App {
         } catch (error) {
             document.getElementById('resultadoVerificacion').textContent = 'Error al verificar rostro';
             console.error(error);
+        }
+    }
+
+    async exportarDatos() {
+        try {
+            const jugadores = await this.db.obtenerTodosJugadores();
+            const dataStr = JSON.stringify(jugadores, null, 2);
+            const blob = new Blob([dataStr], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `jugadores_${new Date().toISOString().split('T')[0]}.json`;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+        } catch (error) {
+            console.error('Error al exportar datos:', error);
+            alert('Error al exportar datos');
+        }
+    }
+
+    async importarDatos() {
+        const fileInput = document.getElementById('fileImport');
+        const file = fileInput.files[0];
+        
+        if (!file) {
+            alert('Por favor seleccione un archivo');
+            return;
+        }
+
+        try {
+            const text = await file.text();
+            const jugadores = JSON.parse(text);
+            
+            // Validar estructura básica de los datos
+            if (!Array.isArray(jugadores)) {
+                throw new Error('Formato de archivo inválido');
+            }
+            
+            await this.db.importarJugadores(jugadores);
+            alert('Datos importados exitosamente');
+            fileInput.value = ''; // Limpiar input
+        } catch (error) {
+            console.error('Error al importar datos:', error);
+            alert('Error al importar datos: ' + error.message);
         }
     }
 }
