@@ -159,6 +159,7 @@ class App {
         document.getElementById('btnVerificarRostro').addEventListener('click', () => this.verificarRostro());
         document.getElementById('btnDatos').addEventListener('click', () => this.cambiarTab('Datos'));
         document.getElementById('btnExportar').addEventListener('click', () => this.exportarDatos());
+        //document.getElementById('btnImportar').addEventListener('click', () => this.importarDatos());
     }
 
     cambiarTab(tab) {
