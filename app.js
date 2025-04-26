@@ -84,6 +84,39 @@ class App {
         this.setupEventListeners();
         this.descriptorActual = null;
         this.iniciarCamaras();
+        this.iniciarIndexDB();
+    }
+
+    iniciarIndexDB(){
+        async function cargarJSON(url) {
+            const respuesta = await fetch(url); // Realiza una solicitud HTTP para el archivo JSON
+            const datos = await respuesta.json(); // Analiza la respuesta como JSON
+            return datos;
+        }
+        
+        cargarJSON('data/db.json')
+            .then(datos => {
+                // Aquí puedes acceder a los datos del archivo JSON
+                console.log(datos);
+                try {
+            
+                    const jugadores = JSON.parse(JSON.stringify(datos));
+                    
+                    // Validar estructura básica de los datos
+                    if (!Array.isArray(jugadores)) {
+                        throw new Error('Formato de archivo inválido');
+                    }
+                    
+                    this.db.importarJugadores(jugadores);
+                    console.log('Datos importados exitosamente');
+                } catch (error) {
+                    console.error('Error al importar datos:', error);
+                    alert('Error al importar datos: ' + error.message);
+                }
+            })
+            .catch(error => {
+                console.error('Error cargando el JSON:', error);
+            });
     }
 
     async iniciarCamaras() {
