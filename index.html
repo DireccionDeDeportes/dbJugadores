@@ -2,101 +2,252 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sistema de Registro de Jugadores</title>
-    <link rel="stylesheet" href="styles.css">
-    <script type="importmap">
-    {
-        "imports": {
-            "idb": "https://cdn.jsdelivr.net/npm/idb@7/+esm"
-        }
-    }
-    </script>
+    <title>Carga de Partido de Fútbol</title>
     <script src="https://cdn.jsdelivr.net/npm/face-api.js@0.22.2/dist/face-api.min.js"></script>
-    <script src="app.js" type="module"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <div class="container">
-        <header>
-            <h1>Sistema de Registro de Jugadores</h1>
-            <nav>
-                <button id="btnRegistro" class="tab-btn active">Registro</button>
-                <button id="btnVerificacion" class="tab-btn">Verificación</button>
-                <button id="btnDatos" class="tab-btn">Gestión de Datos</button>
-            </nav>
-        </header>
+    <div class="container mt-4">
+        <h1 class="text-center mb-4">Planilla de Partido</h1>
 
-        <main>
-            <!-- Sección de Registro -->
-            <section id="seccionRegistro" class="active">
-                <h2>Registro de Nuevo Jugador</h2>
-                <form id="formRegistro">
-                    <div class="form-group">
-                        <label for="apellido">Apellido:</label>
-                        <input type="text" id="apellido" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="nombres">Nombres:</label>
-                        <input type="text" id="nombres" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="dni">DNI:</label>
-                        <input type="text" id="dni" pattern="[0-9]{8}" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="fechaNacimiento">Fecha de Nacimiento:</label>
-                        <input type="date" id="fechaNacimiento" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="club">Club:</label>
-                        <input type="text" id="club" required>
-                    </div>
-                    <div class="form-group">
-                        <label>Foto del Rostro:</label>
-                        <div class="camera-container">
-                            <video id="videoRegistro" autoplay muted></video>
-                            <canvas id="canvasRegistro" style="display: none;"></canvas>
-                            <button type="button" id="btnTomarFoto" class="btn-scan">
-                                Tomar Foto
-                            </button>
+        <form id="matchForm">
+            <!-- Datos básicos -->
+            <div class="card mb-4">
+                <div class="card-header">
+                    <h4>Datos Básicos</h4>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="mb-3">
+                                <label class="form-label">Fecha y Hora</label>
+                                <input type="datetime-local" class="form-control" id="matchDateTime" required>
+                            </div>
                         </div>
-                        <div id="estadoFoto" class="photo-status">
-                            No se ha tomado la foto
+                        <div class="col-md-4">
+                            <div class="mb-3">
+                                <label class="form-label">Número de Cancha</label>
+                                <input type="number" class="form-control" id="fieldNumber" required>
+                            </div>
                         </div>
                     </div>
-                    <button type="submit" class="btn-primary">Registrar Jugador</button>
-                </form>
-            </section>
+                </div>
+            </div>
 
-            <!-- Sección de Verificación -->
-            <section id="seccionVerificacion">
-                <h2>Verificación de Jugador</h2>
-                <div class="verification-container">
-                    <video id="videoVerificacion" autoplay muted></video>
-                    <canvas id="canvasVerificacion" style="display: none;"></canvas>
-                    <button id="btnVerificarRostro" class="btn-scan">
-                        Verificar Identidad
+            <!-- Equipos -->
+            <div class="card mb-4">
+                <div class="card-header">
+                    <h4>Equipos</h4>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label class="form-label">Equipo Local</label>
+                                <select class="form-select team-select" id="homeTeam" required>
+                                    <option value="">Seleccione equipo...</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label class="form-label">Equipo Visitante</label>
+                                <select class="form-select team-select" id="awayTeam" required>
+                                    <option value="">Seleccione equipo...</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Jugadores -->
+            <div class="card mb-4">
+                <div class="card-header">
+                    <h4>Jugadores</h4>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <h5>Equipo Local</h5>
+                            <div class="mb-3">
+                                <div class="input-group">
+                                    <input type="text" class="form-control" id="localPlayerDNI" placeholder="DNI del jugador">
+                                    <button type="button" class="btn btn-primary" onclick="buscarJugador('local')">Buscar</button>
+                                    <button type="button" class="btn btn-secondary" onclick="activarCamara('local')">
+                                        <i class="bi bi-camera"></i> Foto
+                                    </button>
+                                </div>
+                            </div>
+                            <div id="localTeamPlayers" class="players-list">
+                                <!-- Lista de jugadores local -->
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <h5>Equipo Visitante</h5>
+                            <div class="mb-3">
+                                <div class="input-group">
+                                    <input type="text" class="form-control" id="visitantePlayerDNI" placeholder="DNI del jugador">
+                                    <button type="button" class="btn btn-primary" onclick="buscarJugador('visitante')">Buscar</button>
+                                    <button type="button" class="btn btn-secondary" onclick="activarCamara('visitante')">
+                                        <i class="bi bi-camera"></i> Foto
+                                    </button>
+                                </div>
+                            </div>
+                            <div id="visitanteTeamPlayers" class="players-list">
+                                <!-- Lista de jugadores visitante -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Cuerpo Técnico -->
+            <div class="card mb-4">
+                <div class="card-header">
+                    <h4>Cuerpo Técnico</h4>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <h5>Equipo Local</h5>
+                            <div class="mb-3">
+                                <label class="form-label">Director Técnico</label>
+                                <input type="text" class="form-control" id="localCoach" placeholder="Nombre del DT">
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Ayudante de Campo</label>
+                                <input type="text" class="form-control" id="localAssistant" placeholder="Nombre del Ayudante">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <h5>Equipo Visitante</h5>
+                            <div class="mb-3">
+                                <label class="form-label">Director Técnico</label>
+                                <input type="text" class="form-control" id="awayCoach" placeholder="Nombre del DT">
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Ayudante de Campo</label>
+                                <input type="text" class="form-control" id="awayAssistant" placeholder="Nombre del Ayudante">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Goles -->
+            <div class="card mb-4">
+                <div class="card-header">
+                    <h4>Registro de Goles</h4>
+                </div>
+                <div class="card-body">
+                    <div id="goalsList">
+                        <!-- Lista de goles -->
+                    </div>
+                    <button type="button" class="btn btn-success" onclick="agregarGol()">
+                        Agregar Gol
                     </button>
-                    <div id="resultadoVerificacion" class="verification-result">
-                        Esperando verificación...
+                </div>
+            </div>
+
+            <!-- Sanciones -->
+            <div class="card mb-4">
+                <div class="card-header">
+                    <h4>Sanciones</h4>
+                </div>
+                <div class="card-body">
+                    <div id="sanctionsList">
+                        <!-- Lista de sanciones -->
+                    </div>
+                    <button type="button" class="btn btn-warning" onclick="agregarSancion()">
+                        Agregar Sanción
+                    </button>
+                </div>
+            </div>
+
+            <!-- Árbitros -->
+            <div class="card mb-4">
+                <div class="card-header">
+                    <h4>Árbitros</h4>
+                </div>
+                <div class="card-body">
+                    <div id="refereesList">
+                        <div class="mb-3">
+                            <label class="form-label">Árbitro Principal</label>
+                            <div class="input-group">
+                                <input type="text" class="form-control" placeholder="Apellido">
+                                <input type="text" class="form-control" placeholder="DNI">
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Árbitro Asistente 1</label>
+                            <div class="input-group">
+                                <input type="text" class="form-control" placeholder="Apellido">
+                                <input type="text" class="form-control" placeholder="DNI">
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Árbitro Asistente 2</label>
+                            <div class="input-group">
+                                <input type="text" class="form-control" placeholder="Apellido">
+                                <input type="text" class="form-control" placeholder="DNI">
+                            </div>
+                        </div>
                     </div>
                 </div>
-            </section>
+            </div>
 
-            <!-- Nueva Sección de Gestión de Datos -->
-            <section id="seccionDatos">
-                <h2>Gestión de Datos</h2>
-                <div class="data-management">
-                    <div class="form-group">
-                        <button id="btnExportar" class="btn-primary">Exportar Datos</button>
-                    </div><!--
-                    <div class="form-group">
-                        <label for="fileImport">Importar Datos:</label>
-                        <input type="file" id="fileImport" accept=".json" class="file-input">
-                        <button id="btnImportar" class="btn-primary">Importar</button>
-                    </div>-->
+            <!-- Observaciones -->
+            <div class="card mb-4">
+                <div class="card-header">
+                    <h4>Observaciones</h4>
                 </div>
-            </section>
-        </main>
+                <div class="card-body">
+                    <div class="mb-3">
+                        <textarea class="form-control" id="observations" rows="4"></textarea>
+                    </div>
+                    <div class="form-check mb-3">
+                        <input class="form-check-input" type="checkbox" id="hasProtest">
+                        <label class="form-check-label" for="hasProtest">
+                            Planilla sujeta a protesta
+                        </label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="text-center mb-4">
+                <button type="submit" class="btn btn-primary btn-lg">Guardar Planilla</button>
+                <button type="button" class="btn btn-secondary btn-lg" onclick="generarPDF()">Generar PDF</button>
+            </div>
+        </form>
     </div>
+
+    <!-- Modal para cámara -->
+    <div class="modal fade" id="cameraModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Capturar Foto</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <video id="video" width="100%" autoplay></video>
+                    <canvas id="canvas" style="display: none;"></canvas>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                    <button type="button" class="btn btn-primary" onclick="capturarFoto()">Capturar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="main.js"></script>
 </body>
 </html>
