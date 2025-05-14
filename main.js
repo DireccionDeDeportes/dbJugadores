@@ -127,9 +127,12 @@ document.addEventListener('DOMContentLoaded', async function() {
 
 async function loadFaceDetectionModels() {
     try {
-        faceapi.nets.tinyFaceDetector.loadFromUri('/models'),
-        faceapi.nets.faceLandmark68Net.loadFromUri('/models'),
-        faceapi.nets.faceRecognitionNet.loadFromUri('/models'),
+       // faceapi.nets.tinyFaceDetector.loadFromUri('/models'),
+        //faceapi.nets.faceLandmark68Net.loadFromUri('/models'),
+        //faceapi.nets.faceRecognitionNet.loadFromUri('/models'),
+        await faceapi.nets.faceRecognitionNet.loadFromUri('https://68241a7c22f113f17a615c1e--sprightly-bonbon-527be1.netlify.app/');
+        await faceapi.nets.tinyFaceDetector.loadFromUri('https://68241a7c22f113f17a615c1e--sprightly-bonbon-527be1.netlify.app/');
+        await faceapi.nets.faceLandmark68Net.loadFromUri('https://68241a7c22f113f17a615c1e--sprightly-bonbon-527be1.netlify.app/');
         console.log('Face detection models loaded successfully');
     } catch (error) {
         console.error('Error loading face detection models:', error);
