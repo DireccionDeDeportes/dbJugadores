@@ -130,3 +130,16 @@
     font-size: 0.8em;
     cursor: pointer;
 }
+
+#faceDetectionOverlay {
+    pointer-events: none;
+    z-index: 10;
+}
+
+.modal-body {
+    overflow: hidden;
+}
+
+.face-detected {
+    border: 2px solid #28a745;
+}
