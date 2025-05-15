@@ -439,13 +439,14 @@ async function capturarFoto() {
     if (processingPhoto) return;
     processingPhoto = true;
       // Mostrar progreso
+    const progressBar = document.getElementById('face-detection-progress');
     progressBar.style.display = 'block';
     progressBar.value = 10;
     statusText.textContent = 'Capturando imagen...';
     const video = document.getElementById('video');
     const canvas = document.getElementById('canvas');
     const context = canvas.getContext('2d');
-    const progressBar = document.getElementById('face-detection-progress');
+    
     const statusText = document.getElementById('camera-status');
 
     // Capture frame with detected face
