@@ -134,6 +134,9 @@ async function loadFaceDetectionModels() {
         /*await faceapi.nets.faceRecognitionNet.loadFromUri('https://sprightly-bonbon-527be1.netlify.app/');
         await faceapi.nets.tinyFaceDetector.loadFromUri('https://sprightly-bonbon-527be1.netlify.app/');
         await faceapi.nets.faceLandmark68Net.loadFromUri('https://sprightly-bonbon-527be1.netlify.app/');*/
+        await faceapi.nets.ssdMobilenetv1.loadFromUri('https://cdn.jsdelivr.net/npm/@vladmandic/face-api/model/');
+        await faceapi.nets.faceLandmark68Net.loadFromUri('https://cdn.jsdelivr.net/npm/@vladmandic/face-api/model/');
+        await faceapi.nets.faceRecognitionNet.loadFromUri('https://cdn.jsdelivr.net/npm/@vladmandic/face-api/model/');
         console.log('Face detection models loaded successfully');
     } catch (error) {
         console.error('Error loading face detection models:', error);
