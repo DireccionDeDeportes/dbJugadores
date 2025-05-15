@@ -232,6 +232,8 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                 </div>
                 <div class="modal-body position-relative">
+                    <p id="camera-status" class="mb-2">Preparando cámara...</p>
+                    <progress id="face-detection-progress" class="w-100 mb-3" value="0" max="100" style="display: none;"></progress>
                     <video id="video" width="100%" autoplay></video>
                     <canvas id="canvas" style="display: none;"></canvas>
                     <div class="text-center mt-2">

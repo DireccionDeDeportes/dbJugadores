@@ -4,6 +4,7 @@ let currentTeamForPhoto = null;
 let faceDetector = null;
 let faceRecognitionModel = null;
 let detectionInterval = null;
+let processingPhoto = false;
 
 // Datos de ejemplo
 const mockTeams = [
@@ -130,9 +131,9 @@ async function loadFaceDetectionModels() {
        // faceapi.nets.tinyFaceDetector.loadFromUri('/models'),
         //faceapi.nets.faceLandmark68Net.loadFromUri('/models'),
         //faceapi.nets.faceRecognitionNet.loadFromUri('/models'),
-        await faceapi.nets.faceRecognitionNet.loadFromUri('https://sprightly-bonbon-527be1.netlify.app/');
+        /*await faceapi.nets.faceRecognitionNet.loadFromUri('https://sprightly-bonbon-527be1.netlify.app/');
         await faceapi.nets.tinyFaceDetector.loadFromUri('https://sprightly-bonbon-527be1.netlify.app/');
-        await faceapi.nets.faceLandmark68Net.loadFromUri('https://sprightly-bonbon-527be1.netlify.app/');
+        await faceapi.nets.faceLandmark68Net.loadFromUri('https://sprightly-bonbon-527be1.netlify.app/');*/
         console.log('Face detection models loaded successfully');
     } catch (error) {
         console.error('Error loading face detection models:', error);
@@ -405,17 +406,16 @@ function activarCamara(equipo) {
     currentTeamForPhoto = equipo;
     const modal = new bootstrap.Modal(document.getElementById('cameraModal'));
     
+    // Actualizar la interfaz del modal para mostrar el estado del proceso
+    document.getElementById('camera-status').textContent = 'Activando cámara...';
+    document.getElementById('face-detection-progress').style.display = 'none';
+
     navigator.mediaDevices.getUserMedia({ video: true })
         .then(videoStream => {
             stream = videoStream;
             const video = document.getElementById('video');
-            video.srcObject = stream;
-            
-            // Start face detection when video starts playing
-            video.addEventListener('play', () => {
-                startFaceDetection(video);
-            });
-            
+            video.srcObject = stream; 
+            document.getElementById('camera-status').textContent = 'Cámara lista. Capture una foto clara del rostro.'; 
             modal.show();
         })
         .catch(error => {
@@ -424,46 +424,23 @@ function activarCamara(equipo) {
         });
 }
 
-async function startFaceDetection(videoElement) {
-    if (detectionInterval) clearInterval(detectionInterval);
-    
-    const canvas = document.getElementById('canvas');
-    const displaySize = { width: videoElement.videoWidth, height: videoElement.videoHeight };
-    faceapi.matchDimensions(canvas, displaySize);
-    
-    // Add face detection overlay to modal
-    const detectionOverlay = document.createElement('canvas');
-    detectionOverlay.id = 'faceDetectionOverlay';
-    detectionOverlay.style.position = 'absolute';
-    detectionOverlay.style.top = '0';
-    detectionOverlay.style.left = '0';
-    videoElement.parentElement.appendChild(detectionOverlay);
-    
-    detectionInterval = setInterval(async () => {
-        const detections = await faceapi.detectAllFaces(videoElement, 
-            new faceapi.TinyFaceDetectorOptions())
-            .withFaceLandmarks()
-            .withFaceDescriptors();
-            
-        if (detections.length > 0) {
-            // Draw face detection box
-            const context = detectionOverlay.getContext('2d');
-            context.clearRect(0, 0, detectionOverlay.width, detectionOverlay.height);
-            faceapi.draw.drawDetections(detectionOverlay, detections);
-            
-            // Enable capture button if face detected
-            document.querySelector('#cameraModal .btn-primary').disabled = false;
-        } else {
-            // Disable capture button if no face detected
-            document.querySelector('#cameraModal .btn-primary').disabled = true;
-        }
-    }, 100);
-}
+
 
 async function capturarFoto() {
+    if (processingPhoto) return;
+    processingPhoto = true;
     const video = document.getElementById('video');
     const canvas = document.getElementById('canvas');
     const context = canvas.getContext('2d');
+    const progressBar = document.getElementById('face-detection-progress');
+    const statusText = document.getElementById('camera-status');
+
+     // Mostrar progreso
+    progressBar.style.display = 'block';
+    progressBar.value = 10;
+    statusText.textContent = 'Capturando imagen...';
+
+
 
     // Capture frame with detected face
     canvas.width = video.videoWidth;
@@ -471,26 +448,29 @@ async function capturarFoto() {
     context.drawImage(video, 0, 0, canvas.width, canvas.height);
 
     // Get face descriptor from captured image
-    const detections = await faceapi.detectAllFaces(canvas, 
-        new faceapi.TinyFaceDetectorOptions())
-        .withFaceLandmarks()
-        .withFaceDescriptors();
-    console.log(detections);
-    if (detections.length > 0) {
-        const faceDescriptor = detections[0].descriptor;
-        const photoData = canvas.toDataURL('image/jpeg');
-        
-        // Store face descriptor and photo
-       // storeFaceData(faceDescriptor, photoData);
-        
-        // Search for matching player
-        const matchedPlayer = await findMatchingPlayer(faceDescriptor);
-        if (matchedPlayer) {
-            buscarJugadorPorFoto(matchedPlayer, currentTeamForPhoto);
-        } else {
-            mostrarMensaje('No se encontró coincidencia en la base de datos', 'warning');
-        }
+    const detections = await faceapi.detectSingleFace(video)
+            .withFaceLandmarks()
+            .withFaceDescriptor();
+
+    if (!detections) {
+        throw new Error('No se detectó ningún rostro');
     }
+
+    faceDescriptor = detections.descriptor;
+    const photoData = canvas.toDataURL('image/jpeg');
+    
+    // Store face descriptor and photo
+    // storeFaceData(faceDescriptor, photoData);
+    
+    // Search for matching player
+    console.log("Face:" + faceDescriptor);
+    const matchedPlayer = await findMatchingPlayer(faceDescriptor);
+    if (matchedPlayer) {
+        buscarJugadorPorFoto(matchedPlayer, currentTeamForPhoto);
+    } else {
+        mostrarMensaje('No se encontró coincidencia en la base de datos', 'warning');
+    }
+    
 
     // Cleanup
     if (detectionInterval) clearInterval(detectionInterval);
