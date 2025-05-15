@@ -438,18 +438,15 @@ function activarCamara(equipo) {
 async function capturarFoto() {
     if (processingPhoto) return;
     processingPhoto = true;
+      // Mostrar progreso
+    progressBar.style.display = 'block';
+    progressBar.value = 10;
+    statusText.textContent = 'Capturando imagen...';
     const video = document.getElementById('video');
     const canvas = document.getElementById('canvas');
     const context = canvas.getContext('2d');
     const progressBar = document.getElementById('face-detection-progress');
     const statusText = document.getElementById('camera-status');
-
-     // Mostrar progreso
-    progressBar.style.display = 'block';
-    progressBar.value = 10;
-    statusText.textContent = 'Capturando imagen...';
-
-
 
     // Capture frame with detected face
     canvas.width = video.videoWidth;
@@ -464,7 +461,10 @@ async function capturarFoto() {
             .withFaceDescriptor();
 
     if (!detections) {
-        throw new Error('No se detectó ningún rostro');
+        statusText.textContent = `Error: No se detectó ningún rostro en la imagen.`;
+        processingPhoto = false;
+        progressBar.value = 0
+        throw new Error('No se detectó ningún rostro en la imagen.');
     }
 
     progressBar.value = 50;
