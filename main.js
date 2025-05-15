@@ -427,7 +427,13 @@ function activarCamara(equipo) {
         });
 }
 
-
+ function capturarCerrar() {
+    if(stream) {
+        stream.getTracks().forEach(track => track.stop());
+    }
+    bootstrap.Modal.getInstance(document.getElementById('cameraModal')).hide();
+    processingPhoto = false;  
+ }
 
 async function capturarFoto() {
     if (processingPhoto) return;
@@ -451,6 +457,8 @@ async function capturarFoto() {
     context.drawImage(video, 0, 0, canvas.width, canvas.height);
 
     // Get face descriptor from captured image
+    progressBar.value = 30;
+    statusText.textContent = 'Detectando rostro...';
     const detections = await faceapi.detectSingleFace(video)
             .withFaceLandmarks()
             .withFaceDescriptor();
@@ -459,6 +467,8 @@ async function capturarFoto() {
         throw new Error('No se detectó ningún rostro');
     }
 
+    progressBar.value = 50;
+    statusText.textContent = 'Extrayendo características faciales...';
     faceDescriptor = detections.descriptor;
     const photoData = canvas.toDataURL('image/jpeg');
     
@@ -467,6 +477,8 @@ async function capturarFoto() {
     
     // Search for matching player
     console.log("Face:" + faceDescriptor);
+    progressBar.value = 70;
+    statusText.textContent = 'Buscando coincidencias en la base de datos...';
     const matchedPlayer = await findMatchingPlayer(faceDescriptor);
     if (matchedPlayer) {
         buscarJugadorPorFoto(matchedPlayer, currentTeamForPhoto);
@@ -476,15 +488,12 @@ async function capturarFoto() {
     
 
     // Cleanup
-    if (detectionInterval) clearInterval(detectionInterval);
-    if (stream) {
+    if(stream) {
         stream.getTracks().forEach(track => track.stop());
     }
-    const overlay = document.getElementById('faceDetectionOverlay');
-    if (overlay) overlay.remove();
-    
     bootstrap.Modal.getInstance(document.getElementById('cameraModal')).hide();
-}
+    processingPhoto = false;   
+ }
 
 function buscarJugadorPorFoto(player, equipo) {
    
