@@ -8,78 +8,78 @@ let processingPhoto = false;
 
 // Datos de ejemplo
 const mockTeams = [
-    { id: 1, name: '11 REYNAS - B° KENNEDY (SUB-16 F)' },
-    { id: 2, name: 'B° AMEP (SUB-13 M)' },
-    { id: 3, name: 'B° AMEP (SUB-15 M)' },
-    { id: 4, name: 'B° PUCARA (SUB-13 M)' },
-     { id: 5, name: 'B° SANTA RITA (SUB-10 M)' },
-    { id: 6, name: 'B° SOLIDARIDAD (SUB-13 F)' },
-    { id: 7, name: 'B° SOLIDARIDAD (SUB-16 F)' },
-    { id: 8, name: 'CLUB ATLETICO PUEYRREDON - B° PUEYRREDON (SUB-15 M)' },
-     { id: 9, name: 'DEFENSORES 1° DE MAYO (SUB-10 M)' },
-    { id: 10, name: 'DEFENSORES 1° DE MAYO (SUB-13 F)' },
-    { id: 11, name: 'DEFENSORES 1° DE MAYO (SUB-16 F)' },
-    { id: 12, name: 'DOMADORES DE SUEGRA - B° 9 DE JULIO (SUB-13 M)' },
-     { id: 13, name: 'DOMADORES DE SUEGRA - B° 9 DE JULIO (SUB-15 M)' },
-    { id: 14, name: 'DOMADORES DE SUEGRA - B° 9 DE JULIO (SUB-16 F)' },
-    { id: 15, name: 'EL REJUNTE DEL OESTE - B° SARGENTO CABRAL (SUB-15 M)' },
-    { id: 16, name: 'ESTRELLA - B° 140 VIV (SUB-10 M)' },
-     { id: 17, name: 'ESTRELLA - B° 140 VIV (SUB-13 M)' },
-    { id: 18, name: 'ESTRELLA OESTE - LA CERAMICA (SUB-13 M)' },
-    { id: 19, name: 'EUSEBIO FC - B° EUSEBIO CASTAÑO (SUB-10 M)' },
-    { id: 20, name: 'EUSEBIO FC - B° EUSEBIO CASTAÑO (SUB-13 F)' },
-     { id: 21, name: 'EUSEBIO FC - B° EUSEBIO CASTAÑO (SUB-13 M)' },
-    { id: 22, name: 'EUSEBIO FC - B° EUSEBIO CASTAÑO (SUB-15 M)' },
-    { id: 23, name: 'FUSION - B° GOBERNADOR ALRIC (SUB-13 F)' },
-    { id: 24, name: 'FUSION - B° GOBERNADOR ALRIC (SUB-16 F)' },
-     { id: 25, name: 'LA PASION - B° 148 VIV (SUB-13 M)' },
-    { id: 26, name: 'LAS BANCARIAS AMARILLAS - B° LOS RANQUELES (SUB-13 F)' },
-    { id: 27, name: 'LAS BANCARIAS VERDES - B° LOS RANQUELES (SUB-13 F)' },
-    { id: 28, name: 'LAS LEONAS DEL EVA - EVA PERON ANEXO (SUB-16 F)' },
-     { id: 29, name: 'LAS PRINCES - LA CERAMICA B° 400 SUR (SUB-13 F)' },
-    { id: 30, name: 'LEALES - B° 9 DE JULIO (SUB-13 F)' },
-    { id: 31, name: 'LEALES - B° 9 DE JULIO (SUB-13 M)' },
-    { id: 32, name: 'LEALES - B° 9 DE JULIO (SUB-16 F)' },
-     { id: 33, name: 'LOS BANCARIOS - B° PARQUE DE LAS NACIONES (SUB-13 M)' },
-    { id: 34, name: 'LOS BANCARIOS - B° PARQUE DE LAS NACIONES (SUB-15 M)' },
-    { id: 35, name: 'LOS CALDENES DEL OESTE - B° LOS CALDENES (SUB-13 M)' },
-    { id: 36, name: 'LOS CALDENES DEL OESTE - B° LOS CALDENES (SUB-15 M)' },
-     { id: 37, name: 'LOS CUERVOS - B° FAECAP (SUB-15 M)' },
-    { id: 38, name: 'LOS GIGANTES - B° 400 SUR (SUB-15 M)' },
-    { id: 39, name: 'LOS GUERREROS - B° 400 SUR (SUB-13 M)' },
-    { id: 40, name: 'LOS MARGINALES FC - B° SANTA ROSA (SUB-13 M)' },
-    { id: 41, name: 'LOS PIBES DEL REPUBLICA - B° LA REPUBLICA (SUB-13 M)' },
-    { id: 42, name: 'OESTE UNITED - B° LIBERTAD (SUB-10 M)' },
-    { id: 43, name: 'OESTE UNITED - B° LIBERTAD (SUB-13 M)' },
-    { id: 44, name: 'PUEYRREDON - B° PUEYRREDON (SUB-15 M)' },
-    { id: 45, name: 'SANTA ROSA - B° SANTA ROSA (SUB-15 M)' },
-    { id: 46, name: 'SEMILLEROS - B° SAN MARTIN (SUB-10 M)' },
-    { id: 47, name: 'SOLIDARIDAD SUR - B° SOLIDARIDAD SUR (SUB-10 M)' },
-    { id: 48, name: 'SOLIDARIDAD SUR - B° SOLIDARIDAD SUR (SUB-13 M)' },
-    { id: 49, name: 'SOLIDARIDAD SUR - B° SOLIDARIDAD SUR (SUB-15 M)' },
-    { id: 50, name: 'TRICOLOR - B° JOSE HERNANDEZ (SUB-10 M)' },
-    { id: 51, name: 'TRICOLOR - B° JOSE HERNANDEZ (SUB-13 M)' },
-    { id: 52, name: 'TRICOLOR - B° JOSE HERNANDEZ (SUB-15 M)' },
-    { id: 53, name: 'UNION VECINAL - 1° DE MAYO (SUB-10 M)' },
-    { id: 54, name: 'UNION VECINAL - 1° DE MAYO (SUB-13 M)' },
-    { id: 55, name: 'UNION VECINAL - 1° DE MAYO (SUB-15 M)' },
-    { id: 56, name: 'VERDE AMARELLA - B° PARQUE DE LAS NACIONES (SUB-10 M)' },
-    { id: 57, name: 'VIDAD FC - B° IGNACIO VIDAL (SUB-10 M)' },
-    { id: 58, name: 'VILLA DEPORTIVA - B° 208 VIV (SUB-10 M)' },
-    { id: 59, name: 'VILLA DEPORTIVA - B° 208 VIV (SUB-13 M)' },
-    { id: 60, name: 'VILLA DEPORTIVA - B° 208 VIV (SUB-15 M)' }
+    { id: 1, name: '11 REYNAS - B° KENNEDY (SUB-16 F)',coach: 'Quiroga', assistant: 'Garro' },
+    { id: 2, name: 'B° AMEP (SUB-13 M)',coach: 'Torres', assistant: 'Flores' },
+    { id: 3, name: 'B° AMEP (SUB-15 M)',coach: '', assistant: ''  },
+    { id: 4, name: 'B° PUCARA (SUB-13 M)',coach: '', assistant: ''  },
+     { id: 5, name: 'B° SANTA RITA (SUB-10 M)',coach: '', assistant: ''  },
+    { id: 6, name: 'B° SOLIDARIDAD (SUB-13 F)' ,coach: '', assistant: ''  },
+    { id: 7, name: 'B° SOLIDARIDAD (SUB-16 F)' ,coach: '', assistant: ''  },
+    { id: 8, name: 'CLUB ATLETICO PUEYRREDON - B° PUEYRREDON (SUB-15 M)',coach: '', assistant: ''  },
+     { id: 9, name: 'DEFENSORES 1° DE MAYO (SUB-10 M)' ,coach: '', assistant: '' },
+    { id: 10, name: 'DEFENSORES 1° DE MAYO (SUB-13 F)' ,coach: '', assistant: '' },
+    { id: 11, name: 'DEFENSORES 1° DE MAYO (SUB-16 F)' ,coach: '', assistant: '' },
+    { id: 12, name: 'DOMADORES DE SUEGRA - B° 9 DE JULIO (SUB-13 M)',coach: '', assistant: ''  },
+     { id: 13, name: 'DOMADORES DE SUEGRA - B° 9 DE JULIO (SUB-15 M)' ,coach: '', assistant: '' },
+    { id: 14, name: 'DOMADORES DE SUEGRA - B° 9 DE JULIO (SUB-16 F)',coach: '', assistant: ''  },
+    { id: 15, name: 'EL REJUNTE DEL OESTE - B° SARGENTO CABRAL (SUB-15 M)',coach: '', assistant: ''  },
+    { id: 16, name: 'ESTRELLA - B° 140 VIV (SUB-10 M)',coach: '', assistant: ''  },
+     { id: 17, name: 'ESTRELLA - B° 140 VIV (SUB-13 M)',coach: '', assistant: ''  },
+    { id: 18, name: 'ESTRELLA OESTE - LA CERAMICA (SUB-13 M)',coach: '', assistant: ''  },
+    { id: 19, name: 'EUSEBIO FC - B° EUSEBIO CASTAÑO (SUB-10 M)',coach: '', assistant: ''  },
+    { id: 20, name: 'EUSEBIO FC - B° EUSEBIO CASTAÑO (SUB-13 F)',coach: '', assistant: ''  },
+     { id: 21, name: 'EUSEBIO FC - B° EUSEBIO CASTAÑO (SUB-13 M)' ,coach: '', assistant: '' },
+    { id: 22, name: 'EUSEBIO FC - B° EUSEBIO CASTAÑO (SUB-15 M)' ,coach: '', assistant: '' },
+    { id: 23, name: 'FUSION - B° GOBERNADOR ALRIC (SUB-13 F)',coach: '', assistant: ''  },
+    { id: 24, name: 'FUSION - B° GOBERNADOR ALRIC (SUB-16 F)',coach: '', assistant: ''  },
+     { id: 25, name: 'LA PASION - B° 148 VIV (SUB-13 M)' ,coach: '', assistant: '' },
+    { id: 26, name: 'LAS BANCARIAS AMARILLAS - B° LOS RANQUELES (SUB-13 F)' ,coach: '', assistant: '' },
+    { id: 27, name: 'LAS BANCARIAS VERDES - B° LOS RANQUELES (SUB-13 F)',coach: '', assistant: ''  },
+    { id: 28, name: 'LAS LEONAS DEL EVA - EVA PERON ANEXO (SUB-16 F)' ,coach: '', assistant: '' },
+     { id: 29, name: 'LAS PRINCES - LA CERAMICA B° 400 SUR (SUB-13 F)',coach: '', assistant: '' },
+    { id: 30, name: 'LEALES - B° 9 DE JULIO (SUB-13 F)',coach: '', assistant: '' },
+    { id: 31, name: 'LEALES - B° 9 DE JULIO (SUB-13 M)',coach: '', assistant: '' },
+    { id: 32, name: 'LEALES - B° 9 DE JULIO (SUB-16 F)',coach: '', assistant: '' },
+     { id: 33, name: 'LOS BANCARIOS - B° PARQUE DE LAS NACIONES (SUB-13 M)' ,coach: '', assistant: ''},
+    { id: 34, name: 'LOS BANCARIOS - B° PARQUE DE LAS NACIONES (SUB-15 M)' ,coach: '', assistant: ''},
+    { id: 35, name: 'LOS CALDENES DEL OESTE - B° LOS CALDENES (SUB-13 M)' ,coach: '', assistant: ''},
+    { id: 36, name: 'LOS CALDENES DEL OESTE - B° LOS CALDENES (SUB-15 M)' ,coach: '', assistant: ''},
+     { id: 37, name: 'LOS CUERVOS - B° FAECAP (SUB-15 M)' ,coach: '', assistant: ''},
+    { id: 38, name: 'LOS GIGANTES - B° 400 SUR (SUB-15 M)',coach: '', assistant: '' },
+    { id: 39, name: 'LOS GUERREROS - B° 400 SUR (SUB-13 M)',coach: '', assistant: '' },
+    { id: 40, name: 'LOS MARGINALES FC - B° SANTA ROSA (SUB-13 M)',coach: '', assistant: '' },
+    { id: 41, name: 'LOS PIBES DEL REPUBLICA - B° LA REPUBLICA (SUB-13 M)',coach: '', assistant: '' },
+    { id: 42, name: 'OESTE UNITED - B° LIBERTAD (SUB-10 M)',coach: '', assistant: '' },
+    { id: 43, name: 'OESTE UNITED - B° LIBERTAD (SUB-13 M)',coach: '', assistant: '' },
+    { id: 44, name: 'PUEYRREDON - B° PUEYRREDON (SUB-15 M)',coach: '', assistant: '' },
+    { id: 45, name: 'SANTA ROSA - B° SANTA ROSA (SUB-15 M)',coach: '', assistant: '' },
+    { id: 46, name: 'SEMILLEROS - B° SAN MARTIN (SUB-10 M)',coach: '', assistant: '' },
+    { id: 47, name: 'SOLIDARIDAD SUR - B° SOLIDARIDAD SUR (SUB-10 M)',coach: '', assistant: '' },
+    { id: 48, name: 'SOLIDARIDAD SUR - B° SOLIDARIDAD SUR (SUB-13 M)' ,coach: '', assistant: ''},
+    { id: 49, name: 'SOLIDARIDAD SUR - B° SOLIDARIDAD SUR (SUB-15 M)',coach: '', assistant: '' },
+    { id: 50, name: 'TRICOLOR - B° JOSE HERNANDEZ (SUB-10 M)' ,coach: '', assistant: ''},
+    { id: 51, name: 'TRICOLOR - B° JOSE HERNANDEZ (SUB-13 M)' ,coach: '', assistant: ''},
+    { id: 52, name: 'TRICOLOR - B° JOSE HERNANDEZ (SUB-15 M)' ,coach: '', assistant: ''},
+    { id: 53, name: 'UNION VECINAL - 1° DE MAYO (SUB-10 M)' ,coach: '', assistant: ''},
+    { id: 54, name: 'UNION VECINAL - 1° DE MAYO (SUB-13 M)',coach: '', assistant: '' },
+    { id: 55, name: 'UNION VECINAL - 1° DE MAYO (SUB-15 M)' ,coach: '', assistant: ''},
+    { id: 56, name: 'VERDE AMARELLA - B° PARQUE DE LAS NACIONES (SUB-10 M)' ,coach: '', assistant: ''},
+    { id: 57, name: 'VIDAD FC - B° IGNACIO VIDAL (SUB-10 M)' ,coach: '', assistant: ''},
+    { id: 58, name: 'VILLA DEPORTIVA - B° 208 VIV (SUB-10 M)',coach: '', assistant: '' },
+    { id: 59, name: 'VILLA DEPORTIVA - B° 208 VIV (SUB-13 M)',coach: '', assistant: '' },
+    { id: 60, name: 'VILLA DEPORTIVA - B° 208 VIV (SUB-15 M)',coach: '', assistant: '' }
 ];
 
 const mockPlayers = [
-    { dni: '30123456', name: 'Juan Pérez', team_id: 2, photo: 'https://robohash.org/player1',descriptor:[] },
-    { dni: '31234567', name: 'Carlos García', team_id: 2, photo: 'https://robohash.org/player2',descriptor: [] },
-    { dni: '32345678', name: 'Luis Rodríguez', team_id: 2, photo: 'https://robohash.org/player3',descriptor: []},
-    { dni: '33456789', name: 'Miguel González', team_id: 2, photo: 'https://robohash.org/player4',descriptor:[] },
-    { dni: '34567890', name: 'Roberto Martínez', team_id: 2, photo: 'https://robohash.org/player5',descriptor:[] },
-    { dni: '33766125', name: 'Quiroga William', team_id: 2, photo: 'https://robohash.org/player6', descriptor:[-0.10591339319944382,0.13265354931354523,0.09102523326873779,-0.019383355975151062,-0.02892124094069004,0.012014917097985744,-0.006810316815972328,-0.0933004692196846,0.1939668506383896,-0.1363959163427353,0.23990289866924286,0.011735349893569946,-0.20274396240711212,-0.037284716963768005,0.03840310499072075,0.18277785181999207,-0.2375466376543045,-0.0874810516834259,-0.12421686202287674,-0.04427391290664673,0.11121208965778351,-0.0085850665345788,0.05392124876379967,0.059496086090803146,-0.1561354100704193,-0.349834680557251,-0.09385436773300171,-0.05569871887564659,0.06460946053266525,-0.07037269324064255,-0.041177086532115936,-0.06719588488340378,-0.17805278301239014,-0.07085776329040527,-0.002488936996087432,0.050101388245821,-0.06096874922513962,-0.0798705443739891,0.13270604610443115,-0.031125370413064957,-0.18414582312107086,0.028685789555311203,0.06569612771272659,0.23811060190200806,0.1910162717103958,0.12741917371749878,0.011910010129213333,-0.004758906550705433,0.09438039362430573,-0.2668827772140503,0.07409588992595673,0.07510770857334137,0.16989263892173767,0.04109553247690201,0.14884600043296814,-0.13015490770339966,-0.00913189072161913,0.08803585916757584,-0.1344064623117447,0.060857582837343216,0.09596830606460571,-0.04071305692195892,0.05275363475084305,-0.03505343571305275,0.20440009236335754,0.1019122302532196,-0.1443583220243454,-0.061648890376091,0.13569383323192596,-0.1040106937289238,-0.045597437769174576,-0.04617420956492424,-0.10200169682502747,-0.18171927332878113,-0.32898834347724915,-0.001910582883283496,0.4461836516857147,0.1682480275630951,-0.15282563865184784,-0.009405439719557762,-0.06667741388082504,0.05066484585404396,0.05584242194890976,0.06172136589884758,-0.10909545421600342,-0.010842511430382729,-0.10654503852128983,0.04423129931092262,0.14994975924491882,-0.005007639527320862,-0.045126549899578094,0.24117614328861237,-0.012184609659016132,-0.010840870440006256,-0.012235547415912151,0.0015981192700564861,-0.13137352466583252,0.007810435723513365,-0.12593218684196472,0.0079625453799963,0.001854844857007265,-0.025166848674416542,0.04043857753276825,0.13023912906646729,-0.17087124288082123,0.11389566957950592,-0.007360000628978014,0.02760114148259163,0.03686869516968727,0.16919302940368652,-0.24460755288600922,-0.08194312453269958,0.07092399150133133,-0.24200548231601715,0.12984570860862732,0.2303907573223114,-0.01456823106855154,0.09657725691795349,0.10385148972272873,0.08651348948478699,0.04398578777909279,0.06099570170044899,-0.1597442775964737,-0.10202258825302124,0.05635259300470352,-0.04231937602162361,0.09195533394813538,0.06690889596939087] },
-    { dni: '50820671', name: 'BECERRA ROCIO ESMERALDA', team_id: 1, photo: 'https://robohash.org/player7',descriptor:[] },
-    { dni: '51467400', name: 'ZOPPIS MANUELA ANIA', team_id: 1, photo: 'https://robohash.org/player8',descriptor: [] },
-    { dni: '50668417', name: 'GELABERT CELESTE CAMILA', team_id: 1, photo: 'https://robohash.org/player9',descriptor: []},
+    { dni: '30123456', name: 'Juan Pérez', team_id: 2, birthYear: 1995, photo: 'https://robohash.org/player1',descriptor:[] },
+    { dni: '31234567', name: 'Carlos García', team_id: 2,  birthYear: 1995,photo: 'https://robohash.org/player2',descriptor: [] },
+    { dni: '32345678', name: 'Luis Rodríguez', team_id: 2, birthYear: 1995, photo: 'https://robohash.org/player3',descriptor: []},
+    { dni: '33456789', name: 'Miguel González', team_id: 2, birthYear: 1995, photo: 'https://robohash.org/player4',descriptor:[] },
+    { dni: '34567890', name: 'Roberto Martínez', team_id: 2, birthYear: 1995, photo: 'https://robohash.org/player5',descriptor:[] },
+    { dni: '33766125', name: 'Quiroga William', team_id: 2,  birthYear: 1995,photo: 'https://robohash.org/player6', descriptor:[-0.10591339319944382,0.13265354931354523,0.09102523326873779,-0.019383355975151062,-0.02892124094069004,0.012014917097985744,-0.006810316815972328,-0.0933004692196846,0.1939668506383896,-0.1363959163427353,0.23990289866924286,0.011735349893569946,-0.20274396240711212,-0.037284716963768005,0.03840310499072075,0.18277785181999207,-0.2375466376543045,-0.0874810516834259,-0.12421686202287674,-0.04427391290664673,0.11121208965778351,-0.0085850665345788,0.05392124876379967,0.059496086090803146,-0.1561354100704193,-0.349834680557251,-0.09385436773300171,-0.05569871887564659,0.06460946053266525,-0.07037269324064255,-0.041177086532115936,-0.06719588488340378,-0.17805278301239014,-0.07085776329040527,-0.002488936996087432,0.050101388245821,-0.06096874922513962,-0.0798705443739891,0.13270604610443115,-0.031125370413064957,-0.18414582312107086,0.028685789555311203,0.06569612771272659,0.23811060190200806,0.1910162717103958,0.12741917371749878,0.011910010129213333,-0.004758906550705433,0.09438039362430573,-0.2668827772140503,0.07409588992595673,0.07510770857334137,0.16989263892173767,0.04109553247690201,0.14884600043296814,-0.13015490770339966,-0.00913189072161913,0.08803585916757584,-0.1344064623117447,0.060857582837343216,0.09596830606460571,-0.04071305692195892,0.05275363475084305,-0.03505343571305275,0.20440009236335754,0.1019122302532196,-0.1443583220243454,-0.061648890376091,0.13569383323192596,-0.1040106937289238,-0.045597437769174576,-0.04617420956492424,-0.10200169682502747,-0.18171927332878113,-0.32898834347724915,-0.001910582883283496,0.4461836516857147,0.1682480275630951,-0.15282563865184784,-0.009405439719557762,-0.06667741388082504,0.05066484585404396,0.05584242194890976,0.06172136589884758,-0.10909545421600342,-0.010842511430382729,-0.10654503852128983,0.04423129931092262,0.14994975924491882,-0.005007639527320862,-0.045126549899578094,0.24117614328861237,-0.012184609659016132,-0.010840870440006256,-0.012235547415912151,0.0015981192700564861,-0.13137352466583252,0.007810435723513365,-0.12593218684196472,0.0079625453799963,0.001854844857007265,-0.025166848674416542,0.04043857753276825,0.13023912906646729,-0.17087124288082123,0.11389566957950592,-0.007360000628978014,0.02760114148259163,0.03686869516968727,0.16919302940368652,-0.24460755288600922,-0.08194312453269958,0.07092399150133133,-0.24200548231601715,0.12984570860862732,0.2303907573223114,-0.01456823106855154,0.09657725691795349,0.10385148972272873,0.08651348948478699,0.04398578777909279,0.06099570170044899,-0.1597442775964737,-0.10202258825302124,0.05635259300470352,-0.04231937602162361,0.09195533394813538,0.06690889596939087] },
+    { dni: '50820671', name: 'BECERRA ROCIO ESMERALDA',  birthYear: 1995,team_id: 1, photo: 'https://robohash.org/player7',descriptor:[] },
+    { dni: '51467400', name: 'ZOPPIS MANUELA ANIA',  birthYear: 1995,team_id: 1, photo: 'https://robohash.org/player8',descriptor: [] },
+    { dni: '50668417', name: 'GELABERT CELESTE CAMILA', birthYear: 1995, team_id: 1, photo: 'https://robohash.org/player9',descriptor: []},
     { dni: '52049451', name: 'BERON RITA CIELO NICOL', team_id: 1, photo: 'https://robohash.org/player10',descriptor:[] },
     { dni: '50820662', name: 'OJEDA TELLO PAULA EMILIA', team_id: 1, photo: 'https://robohash.org/player11',descriptor:[] },
     { dni: '52356485', name: 'PEREZ GUADALUPE AITANA', team_id: 1, photo: 'https://robohash.org/player12',descriptor:[] },
@@ -99,6 +99,14 @@ const mockPlayers = [
     { dni: '34567890', name: 'Roberto Martínez', team_id: 2, photo: 'https://robohash.org/player21',descriptor:[] },
 ];
 
+const mockReferees = [
+    { id: 1, name: 'Juan Martinez', dni: '25456789' },
+    { id: 2, name: 'Pedro Gonzalez', dni: '26789123' },
+    { id: 3, name: 'Carlos Lopez', dni: '27891234' },
+    { id: 4, name: 'Miguel Rodriguez', dni: '28912345' },
+    { id: 5, name: 'Roberto Perez', dni: '29123456' }
+];
+
 // Inicialización
 document.addEventListener('DOMContentLoaded', async function() {
     // Inicializar Select2 para los equipos
@@ -106,7 +114,10 @@ document.addEventListener('DOMContentLoaded', async function() {
         placeholder: 'Seleccione un equipo',
         data: mockTeams.map(team => ({
             id: team.id,
-            text: team.name
+            text: team.name,
+            coach: team.coach,
+            assistant: team.assistant
+
         }))
     });
 
@@ -122,9 +133,29 @@ document.addEventListener('DOMContentLoaded', async function() {
     // Inicializar formulario
     document.getElementById('matchForm').addEventListener('submit', guardarPlanilla);
 
+    // Inicializar autocompletado de árbitros
+    inicializarAutocompletadoArbitros();
+
     // Load face-api.js models
     await loadFaceDetectionModels();
 });
+
+
+
+
+
+function cargarTecEquipo(tipo,teamId){
+    let Equipo = mockTeams.filter(team => team.id === parseInt(teamId));
+    console.log(Equipo);
+    if(tipo==='local'){
+        document.getElementById('localCoach').value = Equipo[0].coach;
+        document.getElementById('localAssistant').value = Equipo[0].assistant;
+    }
+    if(tipo==='visitante'){
+        document.getElementById('awayCoach').value = Equipo[0].coach;
+        document.getElementById('awayAssistant').value = Equipo[0].assistant;
+    }
+}
 
 async function loadFaceDetectionModels() {
     try {
@@ -180,6 +211,7 @@ function updateLoadPlayersButtons() {
 
 function cargarJugadoresEquipo(tipo, teamId) {
     // Limpiar lista actual
+    cargarTecEquipo(tipo,teamId);
     const container = document.getElementById(`${tipo}TeamPlayers`);
     container.innerHTML = '';
 
@@ -210,7 +242,11 @@ function saveToLocalStorage() {
                 coach: $('#awayCoach').val(),
                 assistant: $('#awayAssistant').val()
             }
-        }
+        },
+        referees: Array.from(document.querySelectorAll('.referee-group')).map(group => ({
+            name: group.querySelector('.referee-input').value,
+            dni: group.querySelector('.referee-dni').value
+        }))
     };
     localStorage.setItem('matchData', JSON.stringify(matchData));
 }
@@ -220,8 +256,8 @@ function getTeamPlayersData(containerId) {
     document.querySelectorAll(`#${containerId} .player-item`).forEach(playerElement => {
         players.push({
             number: playerElement.querySelector('.player-number').value,
-            name: playerElement.querySelector('span').textContent,
-            photo: playerElement.querySelector('img').src,
+            name: playerElement.querySelector('.player-name').textContent,
+            photo: '',
             dni: playerElement.getAttribute('data-dni'),
             captain: playerElement.querySelector('.captain-select').checked
         });
@@ -267,6 +303,16 @@ function restoreFromLocalStorage() {
             $('#awayCoach').val(matchData.technicalStaff.away.coach);
             $('#awayAssistant').val(matchData.technicalStaff.away.assistant);
         }
+        // Restaurar árbitros
+        if (matchData.referees) {
+            matchData.referees.forEach((referee, index) => {
+                const inputs = document.querySelectorAll(`#referee${index + 1} input`);
+                if (inputs.length >= 2) {
+                    inputs[0].value = referee.name;
+                    inputs[1].value = referee.dni;
+                }
+            });
+        }
     }
 
     // Agregar botones de carga inicial
@@ -278,9 +324,11 @@ function createPlayerElement(playerData) {
     playerItem.className = 'player-item';
     playerItem.setAttribute('data-dni', playerData.dni || '');
     playerItem.innerHTML = `
-        <img src="${playerData.photo}" alt="Foto jugador">
-        <input type="number" class="form-control player-number" placeholder="N°" value="${playerData.number || ''}">
-        <span>${playerData.name}</span>
+        <input type="number" class="form-control player-number" placeholder="N°" value="${playerData.number || ''}" style="width: 70px;">
+        <div class="player-info">
+            <div class="player-name">${playerData.name} <span class="birth-year">(${playerData.birthYear || 'N/A'})</span></div>
+            <div class="player-dni">DNI: ${playerData.dni}</div>
+        </div>
         <input type="checkbox" class="captain-select" onchange="setCaptain(this, 'local')" title="Marcar como capitán" ${playerData.captain ? 'checked' : ''}>
         <span class="captain-badge" style="display: ${playerData.captain ? 'inline' : 'none'};">C</span>
         <i class="bi bi-check-circle-fill verification-status" title="Jugador verificado"></i>
@@ -304,9 +352,11 @@ function agregarJugador(equipo, jugador) {
     playerItem.className = 'player-item';
     playerItem.setAttribute('data-dni', jugador.dni);
     playerItem.innerHTML = `
-        <img src="${jugador.photo || 'https://robohash.org/default'}" alt="Foto jugador">
-        <input type="number" class="form-control player-number" placeholder="N°">
-        <span>${jugador.name}</span>
+         <input type="number" class="form-control player-number" placeholder="N°" style="width: 70px;">
+        <div class="player-info">
+            <div class="player-name">${jugador.name} <span class="birth-year">(${jugador.birthYear})</span></div>
+            <div class="player-dni">DNI: ${jugador.dni}</div>
+        </div>
         <input type="checkbox" class="captain-select" onchange="setCaptain(this, '${equipo}')" title="Marcar como capitán">
         <span class="captain-badge" style="display: none;">C</span>
         <i class="bi bi-check-circle-fill verification-status" title="Jugador verificado"></i>
@@ -366,19 +416,23 @@ function buscarJugador(equipo) {
         }
 
         // Mostrar información del jugador encontrado
+        const equipoJugador = mockTeams.find(team => team.id === jugador.team_id);
         const infoContainer = document.createElement('div');
         infoContainer.className = 'alert alert-info mt-2';
         infoContainer.id = `info-${dni}`;
         infoContainer.innerHTML = `
             <div class="d-flex align-items-center">
-                <img src="${jugador.photo}" alt="Foto jugador" style="width: 50px; height: 50px; border-radius: 50%; margin-right: 10px;">
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                
                 <div>
-                    <strong>Nombre:</strong> ${jugador.name}<br>
-                    <strong>DNI:</strong> ${jugador.dni}
+                    <strong>Nombre:</strong> ${jugador.name} <strong> <span class="birth-year">(${jugador.birthYear})</span></strong><br>
+                    <strong>DNI:</strong> ${jugador.dni}<br>
+                    <strong>Equipo:</strong> ${equipoJugador.name}
                 </div>
                 <button class="btn btn-success ms-auto" onclick="confirmarAgregarJugador('${equipo}', '${dni}')">
                     Agregar Jugador
                 </button>
+                 
             </div>
         `;
 
@@ -525,10 +579,10 @@ function buscarJugadorPorFoto(player, equipo) {
         infoContainer.id = `foto-info-${player.dni}`;
         infoContainer.innerHTML = `
             <div class="d-flex align-items-center">
-                <img src="${player.photo}" alt="Foto jugador" style="width: 50px; height: 50px; border-radius: 50%; margin-right: 10px;">
+                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
                 <div>
                     <strong>Jugador Identificado:</strong><br>
-                    Nombre: ${player.name}<br>
+                    Nombre: ${player.name}<br><strong> <span class="birth-year">(${player.birthYear})</span></strong><br>
                     DNI: ${player.dni}<br>
                     Equipo actual: ${equipoJugador.name}
                 </div>
@@ -556,9 +610,11 @@ function agregarJugadorVerificado(equipo, dni) {
         playerItem.className = 'player-item verified';
         playerItem.setAttribute('data-dni', jugador.dni);
         playerItem.innerHTML = `
-            <img src="${jugador.photo || 'https://robohash.org/default'}" alt="Foto jugador">
-            <input type="number" class="form-control player-number" placeholder="N°">
-            <span>${jugador.name}</span>
+            <input type="number" class="form-control player-number" placeholder="N°" style="width: 70px;">
+            <div class="player-info">
+                <div class="player-name">${jugador.name}</div> <span class="birth-year">(${jugador.birthYear})</span></div>
+                <div class="player-dni">DNI: ${jugador.dni}</div>
+            </div>
             <input type="checkbox" class="captain-select" onchange="setCaptain(this, '${equipo}')" title="Marcar como capitán">
             <span class="captain-badge" style="display: none;">C</span>
             <i class="bi bi-check-circle-fill verification-status" title="Jugador verificado"></i>
@@ -783,7 +839,7 @@ function generarPDF() {
     const localPlayers = document.querySelectorAll('#localTeamPlayers .player-item');
     localPlayers.forEach(player => {
         const number = player.querySelector('.player-number').value;
-        const name = player.querySelector('span').textContent;
+        const name = player.querySelector('.player-name').textContent;
         const isCaptain = player.querySelector('.captain-select').checked;
         const isVerified = player.classList.contains('verified');
         let playerText = `   ${number.padStart(2, '0')} - ${name}`;
@@ -800,7 +856,7 @@ function generarPDF() {
     const awayPlayers = document.querySelectorAll('#visitanteTeamPlayers .player-item');
     awayPlayers.forEach(player => {
         const number = player.querySelector('.player-number').value;
-        const name = player.querySelector('span').textContent;
+        const name = player.querySelector('.player-name').textContent;
         const isCaptain = player.querySelector('.captain-select').checked;
         const isVerified = player.classList.contains('verified');
         let playerText = `   ${number.padStart(2, '0')} - ${name}`;
@@ -911,4 +967,47 @@ function mostrarMensaje(mensaje, tipo) {
     setTimeout(() => {
         alertDiv.remove();
     }, 3000);
+}
+
+function inicializarAutocompletadoArbitros() {
+    const refereesInputs = document.querySelectorAll('.referee-input');
+    
+    refereesInputs.forEach(input => {
+        // Crear lista de sugerencias
+        const datalist = document.createElement('datalist');
+        datalist.id = `referees-${input.dataset.index}`;
+        
+        // Agregar opciones al datalist
+        mockReferees.forEach(referee => {
+            const option = document.createElement('option');
+            option.value = `${referee.name} - ${referee.dni}`;
+            datalist.appendChild(option);
+        });
+        
+        // Agregar datalist al documento
+        document.body.appendChild(datalist);
+        
+        // Vincular datalist con input
+        input.setAttribute('list', datalist.id);
+        
+        // Event listener para autocompletar DNI
+        input.addEventListener('input', function(e) {
+            console.log(e.target.value)
+            const selectedValue = e.target.value;
+            const dniInput = this.parentElement.querySelector('.referee-dni');
+            const name = this.parentElement.querySelector('.referee-input');
+            
+            // Buscar en la lista de árbitros
+            const referee = mockReferees.find(ref => 
+                `${ref.name} - ${ref.dni}` === selectedValue
+            );
+            name.value = selectedValue.split(" - ")[0];
+            if (referee) {
+                dniInput.value = referee.dni;
+                dniInput.setAttribute('readonly', true);
+            } else {
+                dniInput.removeAttribute('readonly');
+            }
+        });
+    });
 }

@@ -8,8 +8,8 @@
 .player-item {
     display: flex;
     align-items: center;
-    padding: 10px;
-    margin-bottom: 5px;
+    padding: 15px;
+    margin-bottom: 8px;
     border-radius: 5px;
     background-color: #ffffff;
     border: 1px solid #dee2e6;
@@ -27,9 +27,35 @@
     margin-right: 10px;
 }
 
+.player-info {
+    margin-left: 15px;
+    flex-grow: 1;
+}
+
+.player-name {
+    font-weight: bold;
+    font-size: 1.1em;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.player-dni {
+    color: #666;
+    font-size: 0.9em;
+    margin-top: 2px;
+}
+.birth-year {
+    color: #666;
+    font-size: 0.9em;
+    margin-left: 5px;
+}
+
 .player-number {
     width: 50px;
     margin-right: 10px;
+    text-align: center;
+    font-weight: bold;
 }
 
 .sanction-item {
@@ -90,9 +116,13 @@
     100% { background-color: #d4edda; }
 }
 
+.verification-status {
+    color: #28a745;
+    margin: 0 10px;
+}
+
 .player-item .verification-status {
     margin-left: 10px;
-    color: #28a745;
     display: none;
 }
 
@@ -118,28 +148,32 @@
 .captain-badge {
     background-color: #ffd700;
     color: #000;
-    padding: 2px 8px;
+    padding: 3px 8px;
     border-radius: 12px;
-    font-size: 0.8em;
-    margin-left: 10px;
+    font-size: 0.9em;
+    margin: 0 10px;
+    font-weight: bold;
 }
 
 .captain-select {
-    margin-left: 10px;
+    margin: 0 10px;
     padding: 2px;
     font-size: 0.8em;
     cursor: pointer;
 }
 
-#faceDetectionOverlay {
-    pointer-events: none;
-    z-index: 10;
+.referee-input {
+    min-width: 250px;
 }
 
-.modal-body {
-    overflow: hidden;
+.referee-dni {
+    max-width: 150px;
 }
 
-.face-detected {
-    border: 2px solid #28a745;
+.referee-dni[readonly] {
+    background-color: #e9ecef;
+}
+
+.referee-group .input-group {
+    flex-wrap: nowrap;
 }
