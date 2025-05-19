@@ -245,7 +245,11 @@ function saveToLocalStorage() {
 
 function getTeamPlayersData(containerId) {
     const players = [];
+    
     document.querySelectorAll(`#${containerId} .player-item`).forEach(playerElement => {
+        console.log(playerElement.getAttribute('class'));
+        let noDescritor = false;
+        if(playerElement.getAttribute('class')==='player-item no-descriptor'){noDescritor = true;}
         const [nombre, numeroRaw] = playerElement.querySelector('.player-name').textContent.split(" (");
         const numero = numeroRaw.replace(")", ""); // "10093"
         players.push({
@@ -254,7 +258,8 @@ function getTeamPlayersData(containerId) {
             photo: '',
             dni: playerElement.getAttribute('data-dni'),
             captain: playerElement.querySelector('.captain-select').checked,
-            birthYear: numero
+            birthYear: numero,
+            noDescriptor: noDescritor
         });
     });
     return players;
@@ -316,9 +321,11 @@ function restoreFromLocalStorage() {
 }
 
 function createPlayerElement(playerData) {
-    console.log(playerData);
+    
     const playerItem = document.createElement('div');
     playerItem.className = 'player-item';
+    if (playerData.noDescriptor) 
+        playerItem.classList.add('no-descriptor');
     playerItem.setAttribute('data-dni', playerData.dni || '');
     playerItem.innerHTML = `
         <input type="number" class="form-control player-number" placeholder="N°" value="${playerData.number || ''}" style="width: 70px;">
@@ -344,10 +351,14 @@ function agregarJugador(equipo, jugador) {
         console.error(`Contenedor ${containerId} no encontrado`);
         return;
     }
-    
-    const playerItem = document.createElement('div');
+    console.log(jugador);
+    const playerItem = document.createElement('div'); 
     playerItem.className = 'player-item';
     playerItem.setAttribute('data-dni', jugador.dni);
+      if (0 == jugador.descriptor.length) {
+        console.log("entro");
+        playerItem.classList.add('no-descriptor');
+    }
     playerItem.innerHTML = `
          <input type="number" class="form-control player-number" placeholder="N°" style="width: 70px;">
         <div class="player-info">
@@ -362,7 +373,7 @@ function agregarJugador(equipo, jugador) {
         </button>
     `;
     container.appendChild(playerItem);
-    
+    console.log(playerItem);
     saveToLocalStorage();
 }
 

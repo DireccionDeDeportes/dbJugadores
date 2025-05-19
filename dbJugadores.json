@@ -4,7 +4,7 @@
         "name": "Martinez Lucía",
         "team_id": 11,
         "photo": "",
-        "descriptor": "",
+        "descriptor": [1],
         "birthYear": 1999
     },
     {
@@ -12,7 +12,7 @@
         "name": "Agüero Jazmín",
         "team_id": 11,
         "photo": "",
-        "descriptor": "",
+        "descriptor": [],
         "birthYear": 1999
     },
     {
@@ -20,7 +20,7 @@
         "name": "Herrera Lucia",
         "team_id": 11,
         "photo": "",
-        "descriptor": "",
+        "descriptor": [],
         "birthYear": 1999
     },
     {
@@ -28,7 +28,7 @@
         "name": "Ochoa Selene",
         "team_id": 11,
         "photo": "",
-        "descriptor": "",
+        "descriptor": [],
         "birthYear": 1999
     },
     {
@@ -36,7 +36,7 @@
         "name": "Bustos Marilyn",
         "team_id": 11,
         "photo": "",
-        "descriptor": "",
+        "descriptor": [1],
         "birthYear": 1999
     }
 ]

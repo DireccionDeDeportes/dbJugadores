@@ -177,3 +177,7 @@
 .referee-group .input-group {
     flex-wrap: nowrap;
 }
+
+.player-item.no-descriptor {
+    border-left: 3px solid #ffc107;  /* Subtle yellow border */
+}
