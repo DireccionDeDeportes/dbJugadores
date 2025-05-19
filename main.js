@@ -70,34 +70,12 @@ const mockTeams = [
     { id: 60, name: 'VILLA DEPORTIVA - B° 208 VIV (SUB-15 M)',coach: '', assistant: '' }
 ];
 
-const mockPlayers = [
-    { dni: '30123456', name: 'Juan Pérez', team_id: 2, birthYear: 1995, photo: 'https://robohash.org/player1',descriptor:[] },
-    { dni: '31234567', name: 'Carlos García', team_id: 2,  birthYear: 1995,photo: 'https://robohash.org/player2',descriptor: [] },
-    { dni: '32345678', name: 'Luis Rodríguez', team_id: 2, birthYear: 1995, photo: 'https://robohash.org/player3',descriptor: []},
-    { dni: '33456789', name: 'Miguel González', team_id: 2, birthYear: 1995, photo: 'https://robohash.org/player4',descriptor:[] },
-    { dni: '34567890', name: 'Roberto Martínez', team_id: 2, birthYear: 1995, photo: 'https://robohash.org/player5',descriptor:[] },
-    { dni: '33766125', name: 'Quiroga William', team_id: 2,  birthYear: 1995,photo: 'https://robohash.org/player6', descriptor:[-0.10591339319944382,0.13265354931354523,0.09102523326873779,-0.019383355975151062,-0.02892124094069004,0.012014917097985744,-0.006810316815972328,-0.0933004692196846,0.1939668506383896,-0.1363959163427353,0.23990289866924286,0.011735349893569946,-0.20274396240711212,-0.037284716963768005,0.03840310499072075,0.18277785181999207,-0.2375466376543045,-0.0874810516834259,-0.12421686202287674,-0.04427391290664673,0.11121208965778351,-0.0085850665345788,0.05392124876379967,0.059496086090803146,-0.1561354100704193,-0.349834680557251,-0.09385436773300171,-0.05569871887564659,0.06460946053266525,-0.07037269324064255,-0.041177086532115936,-0.06719588488340378,-0.17805278301239014,-0.07085776329040527,-0.002488936996087432,0.050101388245821,-0.06096874922513962,-0.0798705443739891,0.13270604610443115,-0.031125370413064957,-0.18414582312107086,0.028685789555311203,0.06569612771272659,0.23811060190200806,0.1910162717103958,0.12741917371749878,0.011910010129213333,-0.004758906550705433,0.09438039362430573,-0.2668827772140503,0.07409588992595673,0.07510770857334137,0.16989263892173767,0.04109553247690201,0.14884600043296814,-0.13015490770339966,-0.00913189072161913,0.08803585916757584,-0.1344064623117447,0.060857582837343216,0.09596830606460571,-0.04071305692195892,0.05275363475084305,-0.03505343571305275,0.20440009236335754,0.1019122302532196,-0.1443583220243454,-0.061648890376091,0.13569383323192596,-0.1040106937289238,-0.045597437769174576,-0.04617420956492424,-0.10200169682502747,-0.18171927332878113,-0.32898834347724915,-0.001910582883283496,0.4461836516857147,0.1682480275630951,-0.15282563865184784,-0.009405439719557762,-0.06667741388082504,0.05066484585404396,0.05584242194890976,0.06172136589884758,-0.10909545421600342,-0.010842511430382729,-0.10654503852128983,0.04423129931092262,0.14994975924491882,-0.005007639527320862,-0.045126549899578094,0.24117614328861237,-0.012184609659016132,-0.010840870440006256,-0.012235547415912151,0.0015981192700564861,-0.13137352466583252,0.007810435723513365,-0.12593218684196472,0.0079625453799963,0.001854844857007265,-0.025166848674416542,0.04043857753276825,0.13023912906646729,-0.17087124288082123,0.11389566957950592,-0.007360000628978014,0.02760114148259163,0.03686869516968727,0.16919302940368652,-0.24460755288600922,-0.08194312453269958,0.07092399150133133,-0.24200548231601715,0.12984570860862732,0.2303907573223114,-0.01456823106855154,0.09657725691795349,0.10385148972272873,0.08651348948478699,0.04398578777909279,0.06099570170044899,-0.1597442775964737,-0.10202258825302124,0.05635259300470352,-0.04231937602162361,0.09195533394813538,0.06690889596939087] },
-    { dni: '50820671', name: 'BECERRA ROCIO ESMERALDA',  birthYear: 1995,team_id: 1, photo: 'https://robohash.org/player7',descriptor:[] },
-    { dni: '51467400', name: 'ZOPPIS MANUELA ANIA',  birthYear: 1995,team_id: 1, photo: 'https://robohash.org/player8',descriptor: [] },
-    { dni: '50668417', name: 'GELABERT CELESTE CAMILA', birthYear: 1995, team_id: 1, photo: 'https://robohash.org/player9',descriptor: []},
-    { dni: '52049451', name: 'BERON RITA CIELO NICOL', team_id: 1, photo: 'https://robohash.org/player10',descriptor:[] },
-    { dni: '50820662', name: 'OJEDA TELLO PAULA EMILIA', team_id: 1, photo: 'https://robohash.org/player11',descriptor:[] },
-    { dni: '52356485', name: 'PEREZ GUADALUPE AITANA', team_id: 1, photo: 'https://robohash.org/player12',descriptor:[] },
-    { dni: '50916304', name: 'PEREZ VALENTINA HERMENEGILDA', team_id: 1, photo: 'https://robohash.org/player13',descriptor: [] },
-    { dni: '51349875', name: 'SUAREZ AGUSTINA AIMAR GUADALUPE', team_id: 1, photo: 'https://robohash.org/player14',descriptor: []},
-    { dni: '50668244', name: 'GIMENEZ OJEDA UMA ABIGAIL', team_id: 1, photo: 'https://robohash.org/player15',descriptor:[] },
-    { dni: '50479814', name: 'ZARATE PEREIRA MALANY AYLEN', team_id: 1, photo: 'https://robohash.org/player16',descriptor:[] }, 
-    { dni: '53179601', name: 'MOYANO NATASHA ANTONELA', team_id: 27, photo: 'https://robohash.org/player17',descriptor:[] },
-    { dni: '53177576', name: 'SOSA ZAMARBIDE CAMILA', team_id: 27, photo: 'https://robohash.org/player18',descriptor: [] },
-    { dni: '52356993', name: 'CAPREITO OLIVIA', team_id: 27, photo: 'https://robohash.org/player19',descriptor: []},
-    { dni: '52700041', name: 'ANA ISABELLA FLORES RAMOS MEJIA', team_id: 27, photo: 'https://robohash.org/player20',descriptor:[] },
-    { dni: '52355242', name: 'FERNANDEZ ALMA LUHE', team_id: 27, photo: 'https://robohash.org/player21',descriptor:[] },
-    { dni: '53571322', name: 'CASTRO JULIETA DEL VALLE', team_id: 27, photo: 'https://robohash.org/player17',descriptor:[] },
-    { dni: '52358277', name: 'SCHIAVI JULIA', team_id: 27, photo: 'https://robohash.org/player18',descriptor: [] },
-    { dni: '51025903', name: 'RAMOS GOMEZ SOFIA VALENTINA', team_id: 27, photo: 'https://robohash.org/player19',descriptor: []},
-    { dni: '52553709', name: 'PERCINCULA PRISCILA NAOMI', team_id: 27, photo: 'https://robohash.org/player20',descriptor:[] },
-    { dni: '34567890', name: 'Roberto Martínez', team_id: 2, photo: 'https://robohash.org/player21',descriptor:[] },
-];
+ async function cargarJSON(url) {
+            const respuesta = await fetch(url); // Realiza una solicitud HTTP para el archivo JSON
+            const datos = await respuesta.json(); // Analiza la respuesta como JSON
+            return datos;
+        }  
+let mockPlayers = null;
 
 const mockReferees = [
     { id: 1, name: 'Juan Martinez', dni: '25456789' },
@@ -123,6 +101,20 @@ document.addEventListener('DOMContentLoaded', async function() {
 
     // Restaurar datos guardados
     restoreFromLocalStorage();
+     cargarJSON('dbJugadores.json')
+            .then(datos => {
+                // Aquí puedes acceder a los datos del archivo JSON
+                try {
+                    mockPlayers = JSON.parse(JSON.stringify(datos));
+                    console.log(mockPlayers);
+                } catch (error) {
+                    console.error('Error al importar datos:', error);
+                    alert('Error al importar datos: ' + error.message);
+                }
+            })
+            .catch(error => {
+                console.error('Error cargando el JSON:', error);
+            });
 
     // Event listeners para cambios en los equipos
     $('#homeTeam, #awayTeam').on('change', function() {
@@ -501,8 +493,6 @@ async function capturarFoto() {
     const video = document.getElementById('video');
     const canvas = document.getElementById('canvas');
     const context = canvas.getContext('2d');
-    
-    
 
     // Capture frame with detected face
     canvas.width = video.videoWidth;
