@@ -106,7 +106,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                 // Aquí puedes acceder a los datos del archivo JSON
                 try {
                     mockPlayers = JSON.parse(JSON.stringify(datos));
-                    console.log(mockPlayers);
+                    //console.log(mockPlayers);
                 } catch (error) {
                     console.error('Error al importar datos:', error);
                     alert('Error al importar datos: ' + error.message);
@@ -138,7 +138,7 @@ document.addEventListener('DOMContentLoaded', async function() {
 
 function cargarTecEquipo(tipo,teamId){
     let Equipo = mockTeams.filter(team => team.id === parseInt(teamId));
-    console.log(Equipo);
+    //.log(Equipo);
     if(tipo==='local'){
         document.getElementById('localCoach').value = Equipo[0].coach;
         document.getElementById('localAssistant').value = Equipo[0].assistant;
@@ -246,12 +246,15 @@ function saveToLocalStorage() {
 function getTeamPlayersData(containerId) {
     const players = [];
     document.querySelectorAll(`#${containerId} .player-item`).forEach(playerElement => {
+        const [nombre, numeroRaw] = playerElement.querySelector('.player-name').textContent.split(" (");
+        const numero = numeroRaw.replace(")", ""); // "10093"
         players.push({
             number: playerElement.querySelector('.player-number').value,
-            name: playerElement.querySelector('.player-name').textContent,
+            name: nombre,
             photo: '',
             dni: playerElement.getAttribute('data-dni'),
-            captain: playerElement.querySelector('.captain-select').checked
+            captain: playerElement.querySelector('.captain-select').checked,
+            birthYear: numero
         });
     });
     return players;
@@ -273,6 +276,7 @@ function restoreFromLocalStorage() {
         // Restaurar jugadores
         setTimeout(() => {
             // Esperar a que Select2 termine de inicializarse
+           //console.log(matchData.homePlayers);
             if (matchData.homePlayers) {
                 matchData.homePlayers.forEach(player => {
                     const playerElement = createPlayerElement(player);
@@ -312,6 +316,7 @@ function restoreFromLocalStorage() {
 }
 
 function createPlayerElement(playerData) {
+    console.log(playerData);
     const playerItem = document.createElement('div');
     playerItem.className = 'player-item';
     playerItem.setAttribute('data-dni', playerData.dni || '');
@@ -542,16 +547,14 @@ async function capturarFoto() {
  }
 
 function buscarJugadorPorFoto(player, equipo) {
-   
-   
-    console.log(player);
+
     const equipoJugador = mockTeams.find(team => team.id === player.team_id);
     
     // Buscar al jugador en la lista del equipo actual
     const jugadorExistente = document.querySelector(`#${equipo}TeamPlayers [data-dni="${player.dni}"]`);
-    const jugadorTODOS = document.querySelector(`#${equipo}TeamPlayers`);
-    console.log(jugadorTODOS);
-    
+    //const jugadorTODOS = document.querySelector(`#${equipo}TeamPlayers`);
+
+  
     if (jugadorExistente) {
         // El jugador está en la lista del equipo - verificarlo
         jugadorExistente.classList.add('verified', 'verification-flash');
@@ -982,7 +985,7 @@ function inicializarAutocompletadoArbitros() {
         
         // Event listener para autocompletar DNI
         input.addEventListener('input', function(e) {
-            console.log(e.target.value)
+          
             const selectedValue = e.target.value;
             const dniInput = this.parentElement.querySelector('.referee-dni');
             const name = this.parentElement.querySelector('.referee-input');
