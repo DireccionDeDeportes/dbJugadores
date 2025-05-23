@@ -16,7 +16,7 @@ const mockTeams = [
     { id: 6, name: 'B° SOLIDARIDAD (SUB-13 F)' ,coach: '', assistant: ''  },
     { id: 7, name: 'B° SOLIDARIDAD (SUB-16 F)' ,coach: '', assistant: ''  },
     { id: 8, name: 'CLUB ATLETICO PUEYRREDON - B° PUEYRREDON (SUB-15 M)',coach: '', assistant: ''  },
-     { id: 9, name: 'DEFENSORES 1° DE MAYO (SUB-10 M)' ,coach: '', assistant: '' },
+     { id: 9, name: 'DEFENSORES 1° DE MAYO (SUB-10 M)' ,coach: 'Eduardo Amieva', assistant: 'Salinas Jonathan' },
     { id: 10, name: 'DEFENSORES 1° DE MAYO (SUB-13 F)' ,coach: 'Magallan Yamila', assistant: 'Magallanes Luis' },
     { id: 11, name: 'DEFENSORES 1° DE MAYO (SUB-16 F)' ,coach: '', assistant: '' },
     { id: 12, name: 'DOMADORES DE SUEGRA - B° 9 DE JULIO (SUB-13 M)',coach: '', assistant: ''  },
@@ -57,7 +57,7 @@ const mockTeams = [
     { id: 47, name: 'SOLIDARIDAD SUR - B° SOLIDARIDAD SUR (SUB-10 M)',coach: '', assistant: '' },
     { id: 48, name: 'SOLIDARIDAD SUR - B° SOLIDARIDAD SUR (SUB-13 M)' ,coach: '', assistant: ''},
     { id: 49, name: 'SOLIDARIDAD SUR - B° SOLIDARIDAD SUR (SUB-15 M)',coach: '', assistant: '' },
-    { id: 50, name: 'TRICOLOR - B° JOSE HERNANDEZ (SUB-10 M)' ,coach: '', assistant: ''},
+    { id: 50, name: 'TRICOLOR - B° JOSE HERNANDEZ (SUB-10 M)' ,coach: 'Lopez Rodrigo', assistant: ''},
     { id: 51, name: 'TRICOLOR - B° JOSE HERNANDEZ (SUB-13 M)' ,coach: '', assistant: ''},
     { id: 52, name: 'TRICOLOR - B° JOSE HERNANDEZ (SUB-15 M)' ,coach: '', assistant: ''},
     { id: 53, name: 'UNION VECINAL - 1° DE MAYO (SUB-10 M)' ,coach: '', assistant: ''},
@@ -80,7 +80,8 @@ let mockPlayers = null;
 const mockReferees = [
     { id: 1, name: 'Marcon Victoria', dni: '99999999'},
     { id: 2, name: 'Gatica Guillermina', dni: '99999999'},
-    { id: 3, name: 'Sosa Joana', dni: '99999999'}
+    { id: 3, name: 'Sosa Joana', dni: '99999999'},
+    { id: 4, name: 'Perez Camila', dni: '99999999'}
 ];
 
 // Inicialización
