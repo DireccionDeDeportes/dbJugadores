@@ -17,7 +17,7 @@ const mockTeams = [
     { id: 7, name: 'B° SOLIDARIDAD (SUB-16 F)' ,coach: '', assistant: ''  },
     { id: 8, name: 'CLUB ATLETICO PUEYRREDON - B° PUEYRREDON (SUB-15 M)',coach: '', assistant: ''  },
      { id: 9, name: 'DEFENSORES 1° DE MAYO (SUB-10 M)' ,coach: '', assistant: '' },
-    { id: 10, name: 'DEFENSORES 1° DE MAYO (SUB-13 F)' ,coach: '', assistant: '' },
+    { id: 10, name: 'DEFENSORES 1° DE MAYO (SUB-13 F)' ,coach: 'Magallan Yamila', assistant: 'Magallanes Luis' },
     { id: 11, name: 'DEFENSORES 1° DE MAYO (SUB-16 F)' ,coach: '', assistant: '' },
     { id: 12, name: 'DOMADORES DE SUEGRA - B° 9 DE JULIO (SUB-13 M)',coach: '', assistant: ''  },
      { id: 13, name: 'DOMADORES DE SUEGRA - B° 9 DE JULIO (SUB-15 M)' ,coach: '', assistant: '' },
@@ -33,11 +33,11 @@ const mockTeams = [
     { id: 23, name: 'FUSION - B° GOBERNADOR ALRIC (SUB-13 F)',coach: '', assistant: ''  },
     { id: 24, name: 'FUSION - B° GOBERNADOR ALRIC (SUB-16 F)',coach: '', assistant: ''  },
      { id: 25, name: 'LA PASION - B° 148 VIV (SUB-13 M)' ,coach: '', assistant: '' },
-    { id: 26, name: 'LAS BANCARIAS AMARILLAS - B° LOS RANQUELES (SUB-13 F)' ,coach: '', assistant: '' },
+    { id: 26, name: 'LAS BANCARIAS AMARILLAS - B° LOS RANQUELES (SUB-13 F)' ,coach: 'Ruarte Daiana', assistant: 'Escudero Lucia' },
     { id: 27, name: 'LAS BANCARIAS VERDES - B° LOS RANQUELES (SUB-13 F)',coach: '', assistant: ''  },
     { id: 28, name: 'LAS LEONAS DEL EVA - EVA PERON ANEXO (SUB-16 F)' ,coach: '', assistant: '' },
      { id: 29, name: 'LAS PRINCES - LA CERAMICA B° 400 SUR (SUB-13 F)',coach: '', assistant: '' },
-    { id: 30, name: 'LEALES - B° 9 DE JULIO (SUB-13 F)',coach: '', assistant: '' },
+    { id: 30, name: 'LEALES - B° 9 DE JULIO (SUB-13 F)',coach: 'Heredia', assistant: '' },
     { id: 31, name: 'LEALES - B° 9 DE JULIO (SUB-13 M)',coach: '', assistant: '' },
     { id: 32, name: 'LEALES - B° 9 DE JULIO (SUB-16 F)',coach: '', assistant: '' },
      { id: 33, name: 'LOS BANCARIOS - B° PARQUE DE LAS NACIONES (SUB-13 M)' ,coach: '', assistant: ''},
@@ -64,7 +64,7 @@ const mockTeams = [
     { id: 54, name: 'UNION VECINAL - 1° DE MAYO (SUB-13 M)',coach: '', assistant: '' },
     { id: 55, name: 'UNION VECINAL - 1° DE MAYO (SUB-15 M)' ,coach: '', assistant: ''},
     { id: 56, name: 'VERDE AMARELLA - B° PARQUE DE LAS NACIONES (SUB-10 M)' ,coach: '', assistant: ''},
-    { id: 57, name: 'VIDAD FC - B° IGNACIO VIDAL (SUB-10 M)' ,coach: '', assistant: ''},
+    { id: 57, name: 'VIDAD FC - B° IGNACIO VIDAL (SUB-10 M)' ,coach: 'Isaguirre Sofía', assistant: 'Ortiz Rodrigo'},
     { id: 58, name: 'VILLA DEPORTIVA - B° 208 VIV (SUB-10 M)',coach: '', assistant: '' },
     { id: 59, name: 'VILLA DEPORTIVA - B° 208 VIV (SUB-13 M)',coach: '', assistant: '' },
     { id: 60, name: 'VILLA DEPORTIVA - B° 208 VIV (SUB-15 M)',coach: '', assistant: '' }
@@ -78,11 +78,9 @@ const mockTeams = [
 let mockPlayers = null;
 
 const mockReferees = [
-    { id: 1, name: 'Juan Martinez', dni: '25456789' },
-    { id: 2, name: 'Pedro Gonzalez', dni: '26789123' },
-    { id: 3, name: 'Carlos Lopez', dni: '27891234' },
-    { id: 4, name: 'Miguel Rodriguez', dni: '28912345' },
-    { id: 5, name: 'Roberto Perez', dni: '29123456' }
+    { id: 1, name: 'Marcon Victoria', dni: '99999999'},
+    { id: 2, name: 'Gatica Guillermina', dni: '99999999'},
+    { id: 3, name: 'Sosa Joana', dni: '99999999'}
 ];
 
 // Inicialización
@@ -130,6 +128,17 @@ document.addEventListener('DOMContentLoaded', async function() {
 
     // Load face-api.js models
     await loadFaceDetectionModels();
+
+    // Selecciona todos los inputs con la clase 'referee-input' y 'referee-dni'
+    const inputs = document.querySelectorAll('.referee-input, .referee-dni');
+
+    inputs.forEach(input => {
+      input.addEventListener('blur', function (event) {
+        const valor = event.target.value;
+        saveToLocalStorage();
+      });
+    });
+  
 });
 
 
@@ -305,6 +314,7 @@ function restoreFromLocalStorage() {
             $('#awayAssistant').val(matchData.technicalStaff.away.assistant);
         }
         // Restaurar árbitros
+        console.log(matchData.referees);
         if (matchData.referees) {
             matchData.referees.forEach((referee, index) => {
                 const inputs = document.querySelectorAll(`#referee${index + 1} input`);
@@ -993,7 +1003,7 @@ function inicializarAutocompletadoArbitros() {
         
         // Vincular datalist con input
         input.setAttribute('list', datalist.id);
-        
+       
         // Event listener para autocompletar DNI
         input.addEventListener('input', function(e) {
           
