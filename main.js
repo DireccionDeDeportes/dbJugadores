@@ -28,7 +28,7 @@ const mockTeams = [
     { id: 18, name: 'ESTRELLA OESTE - LA CERAMICA (SUB-13 M)',coach: '', assistant: ''  },
     { id: 19, name: 'EUSEBIO FC - B° EUSEBIO CASTAÑO (SUB-10 M)',coach: '', assistant: ''  },
     { id: 20, name: 'EUSEBIO FC - B° EUSEBIO CASTAÑO (SUB-13 F)',coach: '', assistant: ''  },
-     { id: 21, name: 'EUSEBIO FC - B° EUSEBIO CASTAÑO (SUB-13 M)' ,coach: '', assistant: '' },
+     { id: 21, name: 'EUSEBIO FC - B° EUSEBIO CASTAÑO (SUB-13 M)' ,coach: 'Isaguirre Sofia', assistant: 'Olguin Enzo' },
     { id: 22, name: 'EUSEBIO FC - B° EUSEBIO CASTAÑO (SUB-15 M)' ,coach: '', assistant: '' },
     { id: 23, name: 'FUSION - B° GOBERNADOR ALRIC (SUB-13 F)',coach: '', assistant: ''  },
     { id: 24, name: 'FUSION - B° GOBERNADOR ALRIC (SUB-16 F)',coach: '', assistant: ''  },
@@ -42,13 +42,13 @@ const mockTeams = [
     { id: 32, name: 'LEALES - B° 9 DE JULIO (SUB-16 F)',coach: '', assistant: '' },
      { id: 33, name: 'LOS BANCARIOS - B° PARQUE DE LAS NACIONES (SUB-13 M)' ,coach: '', assistant: ''},
     { id: 34, name: 'LOS BANCARIOS - B° PARQUE DE LAS NACIONES (SUB-15 M)' ,coach: '', assistant: ''},
-    { id: 35, name: 'LOS CALDENES DEL OESTE - B° LOS CALDENES (SUB-13 M)' ,coach: '', assistant: ''},
+    { id: 35, name: 'LOS CALDENES DEL OESTE - B° LOS CALDENES (SUB-13 M)' ,coach: 'Pallero', assistant: ''},
     { id: 36, name: 'LOS CALDENES DEL OESTE - B° LOS CALDENES (SUB-15 M)' ,coach: '', assistant: ''},
      { id: 37, name: 'LOS CUERVOS - B° FAECAP (SUB-15 M)' ,coach: '', assistant: ''},
     { id: 38, name: 'LOS GIGANTES - B° 400 SUR (SUB-15 M)',coach: '', assistant: '' },
     { id: 39, name: 'LOS GUERREROS - B° 400 SUR (SUB-13 M)',coach: '', assistant: '' },
     { id: 40, name: 'LOS MARGINALES FC - B° SANTA ROSA (SUB-13 M)',coach: '', assistant: '' },
-    { id: 41, name: 'LOS PIBES DEL REPUBLICA - B° LA REPUBLICA (SUB-13 M)',coach: '', assistant: '' },
+    { id: 41, name: 'LOS PIBES DEL REPUBLICA - B° LA REPUBLICA (SUB-13 M)',coach: 'Eze', assistant: '' },
     { id: 42, name: 'OESTE UNITED - B° LIBERTAD (SUB-10 M)',coach: '', assistant: '' },
     { id: 43, name: 'OESTE UNITED - B° LIBERTAD (SUB-13 M)',coach: '', assistant: '' },
     { id: 44, name: 'PUEYRREDON - B° PUEYRREDON (SUB-15 M)',coach: '', assistant: '' },
@@ -58,7 +58,7 @@ const mockTeams = [
     { id: 48, name: 'SOLIDARIDAD SUR - B° SOLIDARIDAD SUR (SUB-13 M)' ,coach: '', assistant: ''},
     { id: 49, name: 'SOLIDARIDAD SUR - B° SOLIDARIDAD SUR (SUB-15 M)',coach: '', assistant: '' },
     { id: 50, name: 'TRICOLOR - B° JOSE HERNANDEZ (SUB-10 M)' ,coach: 'Lopez Rodrigo', assistant: ''},
-    { id: 51, name: 'TRICOLOR - B° JOSE HERNANDEZ (SUB-13 M)' ,coach: '', assistant: ''},
+    { id: 51, name: 'TRICOLOR - B° JOSE HERNANDEZ (SUB-13 M)' ,coach: 'Lopez Rodrigo', assistant: ''},
     { id: 52, name: 'TRICOLOR - B° JOSE HERNANDEZ (SUB-15 M)' ,coach: '', assistant: ''},
     { id: 53, name: 'UNION VECINAL - 1° DE MAYO (SUB-10 M)' ,coach: '', assistant: ''},
     { id: 54, name: 'UNION VECINAL - 1° DE MAYO (SUB-13 M)',coach: '', assistant: '' },
@@ -81,7 +81,12 @@ const mockReferees = [
     { id: 1, name: 'Marcon Victoria', dni: '99999999'},
     { id: 2, name: 'Gatica Guillermina', dni: '99999999'},
     { id: 3, name: 'Sosa Joana', dni: '99999999'},
-    { id: 4, name: 'Perez Camila', dni: '99999999'}
+    { id: 4, name: 'Perez Camila', dni: '99999999'},
+    { id: 5, name: 'Cuello Luis', dni: '99999999'},
+    { id: 6, name: 'Becerra Jose', dni: '99999999'},
+    { id: 7, name: 'Soria Miriam', dni: '99999999'},
+    { id: 8, name: 'Gonzalez Lucia', dni: '99999999'}
+
 ];
 
 // Inicialización
