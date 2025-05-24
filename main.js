@@ -15,14 +15,14 @@ const mockTeams = [
      { id: 5, name: 'B° SANTA RITA (SUB-10 M)',coach: '', assistant: ''  },
     { id: 6, name: 'B° SOLIDARIDAD (SUB-13 F)' ,coach: '', assistant: ''  },
     { id: 7, name: 'B° SOLIDARIDAD (SUB-16 F)' ,coach: '', assistant: ''  },
-    { id: 8, name: 'CLUB ATLETICO PUEYRREDON - B° PUEYRREDON (SUB-15 M)',coach: '', assistant: ''  },
+    { id: 8, name: 'CLUB ATLETICO PUEYRREDON - B° PUEYRREDON (SUB-15 M)',coach: 'Saa Diego', assistant: 'Lucero Fatima'  },
      { id: 9, name: 'DEFENSORES 1° DE MAYO (SUB-10 M)' ,coach: 'Eduardo Amieva', assistant: 'Salinas Jonathan' },
     { id: 10, name: 'DEFENSORES 1° DE MAYO (SUB-13 F)' ,coach: 'Magallan Yamila', assistant: 'Magallanes Luis' },
     { id: 11, name: 'DEFENSORES 1° DE MAYO (SUB-16 F)' ,coach: '', assistant: '' },
     { id: 12, name: 'DOMADORES DE SUEGRA - B° 9 DE JULIO (SUB-13 M)',coach: '', assistant: ''  },
-     { id: 13, name: 'DOMADORES DE SUEGRA - B° 9 DE JULIO (SUB-15 M)' ,coach: '', assistant: '' },
+     { id: 13, name: 'DOMADORES DE SUEGRA - B° 9 DE JULIO (SUB-15 M)' ,coach: 'Flores Kevin', assistant: 'Dominguez Emanuel' },
     { id: 14, name: 'DOMADORES DE SUEGRA - B° 9 DE JULIO (SUB-16 F)',coach: '', assistant: ''  },
-    { id: 15, name: 'EL REJUNTE DEL OESTE - B° SARGENTO CABRAL (SUB-15 M)',coach: '', assistant: ''  },
+    { id: 15, name: 'EL REJUNTE DEL OESTE - B° SARGENTO CABRAL (SUB-15 M)',coach: 'Guzman Gonzalo', assistant: 'Reta Benjamin'  },
     { id: 16, name: 'ESTRELLA - B° 140 VIV (SUB-10 M)',coach: '', assistant: ''  },
      { id: 17, name: 'ESTRELLA - B° 140 VIV (SUB-13 M)',coach: '', assistant: ''  },
     { id: 18, name: 'ESTRELLA OESTE - LA CERAMICA (SUB-13 M)',coach: '', assistant: ''  },
@@ -41,7 +41,7 @@ const mockTeams = [
     { id: 31, name: 'LEALES - B° 9 DE JULIO (SUB-13 M)',coach: '', assistant: '' },
     { id: 32, name: 'LEALES - B° 9 DE JULIO (SUB-16 F)',coach: '', assistant: '' },
      { id: 33, name: 'LOS BANCARIOS - B° PARQUE DE LAS NACIONES (SUB-13 M)' ,coach: '', assistant: ''},
-    { id: 34, name: 'LOS BANCARIOS - B° PARQUE DE LAS NACIONES (SUB-15 M)' ,coach: '', assistant: ''},
+    { id: 34, name: 'LOS BANCARIOS - B° PARQUE DE LAS NACIONES (SUB-15 M)' ,coach: 'Gonzalez Damian', assistant: ''},
     { id: 35, name: 'LOS CALDENES DEL OESTE - B° LOS CALDENES (SUB-13 M)' ,coach: 'Pallero', assistant: ''},
     { id: 36, name: 'LOS CALDENES DEL OESTE - B° LOS CALDENES (SUB-15 M)' ,coach: '', assistant: ''},
      { id: 37, name: 'LOS CUERVOS - B° FAECAP (SUB-15 M)' ,coach: '', assistant: ''},
@@ -59,7 +59,7 @@ const mockTeams = [
     { id: 49, name: 'SOLIDARIDAD SUR - B° SOLIDARIDAD SUR (SUB-15 M)',coach: '', assistant: '' },
     { id: 50, name: 'TRICOLOR - B° JOSE HERNANDEZ (SUB-10 M)' ,coach: 'Lopez Rodrigo', assistant: ''},
     { id: 51, name: 'TRICOLOR - B° JOSE HERNANDEZ (SUB-13 M)' ,coach: 'Lopez Rodrigo', assistant: ''},
-    { id: 52, name: 'TRICOLOR - B° JOSE HERNANDEZ (SUB-15 M)' ,coach: '', assistant: ''},
+    { id: 52, name: 'TRICOLOR - B° JOSE HERNANDEZ (SUB-15 M)' ,coach: 'Torres Rolando', assistant: ''},
     { id: 53, name: 'UNION VECINAL - 1° DE MAYO (SUB-10 M)' ,coach: '', assistant: ''},
     { id: 54, name: 'UNION VECINAL - 1° DE MAYO (SUB-13 M)',coach: '', assistant: '' },
     { id: 55, name: 'UNION VECINAL - 1° DE MAYO (SUB-15 M)' ,coach: '', assistant: ''},
@@ -67,7 +67,8 @@ const mockTeams = [
     { id: 57, name: 'VIDAD FC - B° IGNACIO VIDAL (SUB-10 M)' ,coach: 'Isaguirre Sofía', assistant: 'Ortiz Rodrigo'},
     { id: 58, name: 'VILLA DEPORTIVA - B° 208 VIV (SUB-10 M)',coach: '', assistant: '' },
     { id: 59, name: 'VILLA DEPORTIVA - B° 208 VIV (SUB-13 M)',coach: '', assistant: '' },
-    { id: 60, name: 'VILLA DEPORTIVA - B° 208 VIV (SUB-15 M)',coach: '', assistant: '' }
+    { id: 60, name: 'VILLA DEPORTIVA - B° 208 VIV (SUB-15 M)',coach: '', assistant: '' },
+    { id: 61, name: 'EQUIPO MUNICIPAL',coach: 'Aguilar Fernando', assistant: '' }
 ];
 
  async function cargarJSON(url) {
@@ -85,7 +86,13 @@ const mockReferees = [
     { id: 5, name: 'Cuello Luis', dni: '99999999'},
     { id: 6, name: 'Becerra Jose', dni: '99999999'},
     { id: 7, name: 'Soria Miriam', dni: '99999999'},
-    { id: 8, name: 'Gonzalez Lucia', dni: '99999999'}
+    { id: 8, name: 'Gonzalez Lucia', dni: '99999999'},
+    { id: 9, name: 'Herrera Ruben', dni: '99999999'},
+    { id: 10, name: 'Ortiz Elio', dni: '99999999'},
+    { id: 11, name: 'Ochoa Brayan', dni: '99999999'},
+    { id: 12, name: 'Perez Camila', dni: '99999999'},
+    { id: 13, name: 'Marchan Damian', dni: '99999999'},
+    { id: 14, name: 'Velazquez Micaela', dni: '99999999'}
 
 ];
 
@@ -105,12 +112,12 @@ document.addEventListener('DOMContentLoaded', async function() {
 
     // Restaurar datos guardados
     restoreFromLocalStorage();
-     cargarJSON('dbJugadores.json')
+     cargarJSON('personas_actualizadas.json')
             .then(datos => {
                 // Aquí puedes acceder a los datos del archivo JSON
                 try {
                     mockPlayers = JSON.parse(JSON.stringify(datos));
-                    //console.log(mockPlayers);
+                   // console.log(mockPlayers);
                 } catch (error) {
                     console.error('Error al importar datos:', error);
                     alert('Error al importar datos: ' + error.message);
@@ -262,7 +269,7 @@ function getTeamPlayersData(containerId) {
     const players = [];
     
     document.querySelectorAll(`#${containerId} .player-item`).forEach(playerElement => {
-        console.log(playerElement.getAttribute('class'));
+       // console.log(playerElement.getAttribute('class'));
         let noDescritor = false;
         if(playerElement.getAttribute('class')==='player-item no-descriptor'){noDescritor = true;}
         const [nombre, numeroRaw] = playerElement.querySelector('.player-name').textContent.split(" (");
@@ -320,7 +327,7 @@ function restoreFromLocalStorage() {
             $('#awayAssistant').val(matchData.technicalStaff.away.assistant);
         }
         // Restaurar árbitros
-        console.log(matchData.referees);
+        //console.log(matchData.referees);
         if (matchData.referees) {
             matchData.referees.forEach((referee, index) => {
                 const inputs = document.querySelectorAll(`#referee${index + 1} input`);
@@ -367,12 +374,11 @@ function agregarJugador(equipo, jugador) {
         console.error(`Contenedor ${containerId} no encontrado`);
         return;
     }
-    console.log(jugador);
+    //console.log(jugador);
     const playerItem = document.createElement('div'); 
     playerItem.className = 'player-item';
     playerItem.setAttribute('data-dni', jugador.dni);
       if (0 == jugador.descriptor.length) {
-        console.log("entro");
         playerItem.classList.add('no-descriptor');
     }
     playerItem.innerHTML = `
@@ -389,7 +395,7 @@ function agregarJugador(equipo, jugador) {
         </button>
     `;
     container.appendChild(playerItem);
-    console.log(playerItem);
+   // console.log(playerItem);
     saveToLocalStorage();
 }
 
@@ -554,7 +560,7 @@ async function capturarFoto() {
     // storeFaceData(faceDescriptor, photoData);
     
     // Search for matching player
-    console.log("Face:" + faceDescriptor);
+   // console.log("Face:" + faceDescriptor);
     progressBar.value = 70;
     statusText.textContent = 'Buscando coincidencias en la base de datos...';
     const matchedPlayer = await findMatchingPlayer(faceDescriptor);
