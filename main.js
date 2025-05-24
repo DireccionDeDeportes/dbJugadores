@@ -697,7 +697,7 @@ async function findMatchingPlayer(faceDescriptor) {
         );}
         
          // Use threshold of 0.6 for face matching
-        if (distance < 0.6 && distance < bestDistance) {
+        if (distance < 0.5 && distance < bestDistance) {
             bestDistance = distance;
             bestMatch = player;
         }
