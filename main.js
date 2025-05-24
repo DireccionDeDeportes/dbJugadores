@@ -496,8 +496,14 @@ function activarCamara(equipo) {
     // Actualizar la interfaz del modal para mostrar el estado del proceso
     document.getElementById('camera-status').textContent = 'Activando cámara...';
     document.getElementById('face-detection-progress').style.display = 'none';
+    const constraints = {
+    video: {
+        facingMode: { exact: "environment" }
+         },
+    audio: false
+    };
 
-    navigator.mediaDevices.getUserMedia({ video: true })
+    navigator.mediaDevices.getUserMedia(constraints)
         .then(videoStream => {
             stream = videoStream;
             const video = document.getElementById('video');
