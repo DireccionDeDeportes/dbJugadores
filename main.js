@@ -8,7 +8,7 @@ let processingPhoto = false;
 
 // Datos de ejemplo
 const mockTeams = [
-    { id: 1, name: '11 REYNAS - B° KENNEDY (SUB-16 F)',coach: 'Quiroga', assistant: 'Garro' },
+    { id: 1, name: '11 REYNAS - B° KENNEDY (SUB-16 F)',coach: '', assistant: '' },
     { id: 2, name: 'B° AMEP (SUB-13 M)',coach: 'Torres', assistant: 'Flores' },
     { id: 3, name: 'B° AMEP (SUB-15 M)',coach: '', assistant: ''  },
     { id: 4, name: 'B° PUCARA (SUB-13 M)',coach: '', assistant: ''  },
@@ -18,7 +18,7 @@ const mockTeams = [
     { id: 8, name: 'CLUB ATLETICO PUEYRREDON - B° PUEYRREDON (SUB-15 M)',coach: 'Saa Diego', assistant: 'Lucero Fatima'  },
      { id: 9, name: 'DEFENSORES 1° DE MAYO (SUB-10 M)' ,coach: 'Eduardo Amieva', assistant: 'Salinas Jonathan' },
     { id: 10, name: 'DEFENSORES 1° DE MAYO (SUB-13 F)' ,coach: 'Magallan Yamila', assistant: 'Magallanes Luis' },
-    { id: 11, name: 'DEFENSORES 1° DE MAYO (SUB-16 F)' ,coach: '', assistant: '' },
+    { id: 11, name: 'DEFENSORES 1° DE MAYO (SUB-16 F)' ,coach: 'Luis Magallan', assistant: 'Miranda Pricila' },
     { id: 12, name: 'DOMADORES DE SUEGRA - B° 9 DE JULIO (SUB-13 M)',coach: '', assistant: ''  },
      { id: 13, name: 'DOMADORES DE SUEGRA - B° 9 DE JULIO (SUB-15 M)' ,coach: 'Flores Kevin', assistant: 'Dominguez Emanuel' },
     { id: 14, name: 'DOMADORES DE SUEGRA - B° 9 DE JULIO (SUB-16 F)',coach: '', assistant: ''  },
@@ -929,7 +929,7 @@ function generarPDF() {
     yPos = addSection('ÁRBITROS', yPos);
     const referees = document.querySelectorAll('#refereesList .input-group');
     referees.forEach((referee, index) => {
-        const apellido = referee.querySelector('input[placeholder="Apellido"]').value;
+        const apellido = referee.querySelector('input[placeholder="Nombre del árbitro"]').value;
         const dni = referee.querySelector('input[placeholder="DNI"]').value;
         const role = index === 0 ? 'Principal' : `Asistente ${index}`;
         yPos = addText(`${role}: ${apellido} - DNI: ${dni}`, yPos);
