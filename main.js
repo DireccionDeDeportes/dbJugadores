@@ -21,7 +21,7 @@ const mockTeams = [
     { id: 11, name: 'DEFENSORES 1° DE MAYO (SUB-16 F)' ,coach: 'Luis Magallan', assistant: 'Miranda Pricila' },
     { id: 12, name: 'DOMADORES DE SUEGRA - B° 9 DE JULIO (SUB-13 M)',coach: '', assistant: ''  },
      { id: 13, name: 'DOMADORES DE SUEGRA - B° 9 DE JULIO (SUB-15 M)' ,coach: 'Flores Kevin', assistant: 'Dominguez Emanuel' },
-    { id: 14, name: 'DOMADORES DE SUEGRA - B° 9 DE JULIO (SUB-16 F)',coach: '', assistant: ''  },
+    { id: 14, name: 'DOMADORES DE SUEGRA - B° 9 DE JULIO (SUB-16 F)',coach: 'Kevin Flores', assistant: 'Emanuel'  },
     { id: 15, name: 'EL REJUNTE DEL OESTE - B° SARGENTO CABRAL (SUB-15 M)',coach: 'Guzman Gonzalo', assistant: 'Reta Benjamin'  },
     { id: 16, name: 'ESTRELLA - B° 140 VIV (SUB-10 M)',coach: '', assistant: ''  },
      { id: 17, name: 'ESTRELLA - B° 140 VIV (SUB-13 M)',coach: '', assistant: ''  },
@@ -697,7 +697,7 @@ async function findMatchingPlayer(faceDescriptor) {
         );}
         
          // Use threshold of 0.6 for face matching
-        if (distance < 0.48 && distance < bestDistance) {
+        if (distance < 0.5 && distance < bestDistance) {
             bestDistance = distance;
             bestMatch = player;
         }
