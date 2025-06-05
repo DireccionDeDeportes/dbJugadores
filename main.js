@@ -363,6 +363,13 @@ function createPlayerElement(playerData) {
             <i class="bi bi-trash"></i>
         </button>
     `;
+     // Agregar evento de doble clic para verificación facial
+    playerItem.addEventListener('dblclick', (e) => {
+        // Ignorar doble clic en botones e inputs
+        if (e.target.tagName !== 'BUTTON' && e.target.tagName !== 'INPUT') {
+            capturarFoto(playerItem);
+        }
+    });
     return playerItem;
 }
 
@@ -525,7 +532,9 @@ function activarCamara(equipo) {
     processingPhoto = false;  
  }
 
-async function capturarFoto() {
+async function capturarFoto(playerItem) {
+    console.log("Entro");
+    activarCamara(playerItem.equipo)
     if (processingPhoto) return;
     processingPhoto = true;
       // Mostrar progreso
@@ -569,9 +578,9 @@ async function capturarFoto() {
    // console.log("Face:" + faceDescriptor);
     progressBar.value = 70;
     statusText.textContent = 'Buscando coincidencias en la base de datos...';
-    const matchedPlayer = await findMatchingPlayer(faceDescriptor);
+    const matchedPlayer = findMatchingPlayerItem(faceDescriptor,playerItem)
     if (matchedPlayer) {
-        buscarJugadorPorFoto(matchedPlayer, currentTeamForPhoto);
+        buscarJugadorPorFoto(playerItem, currentTeamForPhoto);
     } else {
         mostrarMensaje('No se encontró coincidencia en la base de datos', 'warning');
     }
@@ -703,6 +712,25 @@ async function findMatchingPlayer(faceDescriptor) {
         }
     });
     return bestMatch;
+}
+
+async function findMatchingPlayerItem(faceDescriptor,playerItem) {
+    // Get stored face descriptors
+    //const storedFaces = JSON.parse(localStorage.getItem('faceDescriptors') || '[]');
+    
+    // Find best match
+    let bestMatch = null;
+    let bestDistance = Infinity;
+    let distance = 100;
+    const descriptorGuardado = new Float32Array(playerItem.descriptor);
+    if(descriptorGuardado.length>0){
+        distance=faceapi.euclideanDistance(faceDescriptor,descriptorGuardado);
+    }
+    if (distance < 0.6 ) {
+            return true;
+    }
+    
+    return false;
 }
 
 function agregarGol() {
