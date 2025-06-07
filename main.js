@@ -1,6 +1,7 @@
 // Variables globales
 let stream = null;
 let currentTeamForPhoto = null;
+let currentPlayer = null;
 let faceDetector = null;
 let faceRecognitionModel = null;
 let detectionInterval = null;
@@ -306,14 +307,14 @@ function restoreFromLocalStorage() {
            //console.log(matchData.homePlayers);
             if (matchData.homePlayers) {
                 matchData.homePlayers.forEach(player => {
-                    const playerElement = createPlayerElement(player);
+                    const playerElement = createPlayerElement(player,'local');
                     document.getElementById('localTeamPlayers').appendChild(playerElement);
                 });
             }
 
             if (matchData.awayPlayers) {
                 matchData.awayPlayers.forEach(player => {
-                    const playerElement = createPlayerElement(player);
+                    const playerElement = createPlayerElement(player,'visitante');
                     document.getElementById('visitanteTeamPlayers').appendChild(playerElement);
                 });
             }
@@ -343,7 +344,7 @@ function restoreFromLocalStorage() {
     agregarBotonCargarJugadores();
 }
 
-function createPlayerElement(playerData) {
+function createPlayerElement(playerData, equipo) {
     
     const playerItem = document.createElement('div');
     playerItem.className = 'player-item';
@@ -367,7 +368,7 @@ function createPlayerElement(playerData) {
     playerItem.addEventListener('dblclick', (e) => {
         // Ignorar doble clic en botones e inputs
         if (e.target.tagName !== 'BUTTON' && e.target.tagName !== 'INPUT') {
-            capturarFoto(playerItem);
+            activarCamara(playerData,equipo);
         }
     });
     return playerItem;
@@ -401,6 +402,13 @@ function agregarJugador(equipo, jugador) {
             <i class="bi bi-trash"></i>
         </button>
     `;
+     // Agregar evento de doble clic para verificación facial
+    playerItem.addEventListener('dblclick', (e) => {
+        // Ignorar doble clic en botones e inputs
+        if (e.target.tagName !== 'BUTTON' && e.target.tagName !== 'INPUT') {
+            activarCamara(jugador, equipo);
+        }
+    });
     container.appendChild(playerItem);
    // console.log(playerItem);
     saveToLocalStorage();
@@ -472,6 +480,13 @@ function buscarJugador(equipo) {
                  
             </div>
         `;
+         // Agregar evento de doble clic para verificación facial
+        infoContainer.addEventListener('dblclick', (e) => {
+            // Ignorar doble clic en botones e inputs
+            if (e.target.tagName !== 'BUTTON' && e.target.tagName !== 'INPUT') {
+                activarCamara(jugador, equipo);
+            }
+        });
 
         // Remover información previa si existe
         const prevInfo = document.getElementById(`info-${dni}`);
@@ -496,8 +511,23 @@ function confirmarAgregarJugador(equipo, dni) {
     }
 }
 
-function activarCamara(equipo) {
+function activarCamara(player,equipo) {
+    //console.log(player);
+    if(player.noDescriptor){
+        mostrarMensaje('El jugador no registra FOTO, Sacar Foto a Jugador', 'danger');
+        return
+    }else{
+        if(player.noDescriptor!==false){
+            if(player.descriptor.length==0){
+            mostrarMensaje('El jugador no registra FOTO, Sacar Foto a Jugador', 'danger');
+            return
+        }
+        
+    }
+    }
+    
     currentTeamForPhoto = equipo;
+    currentPlayer = player;
     const modal = new bootstrap.Modal(document.getElementById('cameraModal'));
     
     // Actualizar la interfaz del modal para mostrar el estado del proceso
@@ -505,7 +535,8 @@ function activarCamara(equipo) {
     document.getElementById('face-detection-progress').style.display = 'none';
     const constraints = {
     video: {
-        facingMode: { exact: "environment" }
+            facingMode: { exact: "environment" }
+           // facingMode: { exact: "user" }
          },
     audio: false
     };
@@ -532,9 +563,7 @@ function activarCamara(equipo) {
     processingPhoto = false;  
  }
 
-async function capturarFoto(playerItem) {
-    console.log("Entro");
-    activarCamara(playerItem.equipo)
+async function capturarFoto() {
     if (processingPhoto) return;
     processingPhoto = true;
       // Mostrar progreso
@@ -578,11 +607,12 @@ async function capturarFoto(playerItem) {
    // console.log("Face:" + faceDescriptor);
     progressBar.value = 70;
     statusText.textContent = 'Buscando coincidencias en la base de datos...';
-    const matchedPlayer = findMatchingPlayerItem(faceDescriptor,playerItem)
+    const matchedPlayer = await findMatchingPlayerItem(faceDescriptor,currentPlayer)
+    console.log(matchedPlayer)
     if (matchedPlayer) {
-        buscarJugadorPorFoto(playerItem, currentTeamForPhoto);
+        buscarJugadorPorFoto(currentPlayer,currentTeamForPhoto);
     } else {
-        mostrarMensaje('No se encontró coincidencia en la base de datos', 'warning');
+        mostrarMensaje('La foto guardada no es igual verifica identidad', 'danger');
     }
     
 
@@ -610,7 +640,7 @@ function buscarJugadorPorFoto(player, equipo) {
             jugadorExistente.classList.remove('verification-flash');
         }, 1000);
         mostrarMensaje('Jugador verificado exitosamente', 'success');
-    } else {
+    } /*else {
         // El jugador no está en la lista del equipo
         const equipoId = document.getElementById(`${equipo === 'local' ? 'homeTeam' : 'awayTeam'}`).value;
         
@@ -642,9 +672,9 @@ function buscarJugadorPorFoto(player, equipo) {
         // Insertar nueva información después del grupo de botones
         const buttonGroup = document.querySelector(`#${equipo === 'local' ? 'localTeamPlayers' : 'visitanteTeamPlayers'}`).previousElementSibling;
         buttonGroup.after(infoContainer);
-    }
+    }/ */
 }
-function agregarJugadorVerificado(equipo, dni) {
+/*function agregarJugadorVerificado(equipo, dni) {
     const jugador = mockPlayers.find(player => player.dni === dni);
     if (jugador) {
         const playerItem = document.createElement('div');
@@ -674,7 +704,7 @@ function agregarJugadorVerificado(equipo, dni) {
         mostrarMensaje('Jugador agregado y verificado exitosamente', 'success');
         saveToLocalStorage();
     }
-}
+}*/
 
 
 function storeFaceData(faceDescriptor, photoData) {
@@ -717,19 +747,25 @@ async function findMatchingPlayer(faceDescriptor) {
 async function findMatchingPlayerItem(faceDescriptor,playerItem) {
     // Get stored face descriptors
     //const storedFaces = JSON.parse(localStorage.getItem('faceDescriptors') || '[]');
-    
+    //console.log(playerItem);
+    let jugadorDesc = null;
+    mockPlayers.find(player => {if(player.dni==playerItem.dni)jugadorDesc=player;});
+    //console.log(jugadorDesc);
     // Find best match
     let bestMatch = null;
     let bestDistance = Infinity;
     let distance = 100;
-    const descriptorGuardado = new Float32Array(playerItem.descriptor);
+
+    const descriptorGuardado = new Float32Array(jugadorDesc.descriptor);
+    //console.log(descriptorGuardado);
     if(descriptorGuardado.length>0){
         distance=faceapi.euclideanDistance(faceDescriptor,descriptorGuardado);
     }
     if (distance < 0.6 ) {
+        mostrarMensaje('Distancia: '+distance, 'danger');
             return true;
     }
-    
+    mostrarMensaje('Distancia: '+distance, 'danger');
     return false;
 }
 
