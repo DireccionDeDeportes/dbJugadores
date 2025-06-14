@@ -495,8 +495,69 @@ function buscarJugador(equipo) {
         // Insertar nueva información
         dniInput.parentElement.after(infoContainer);
     } else {
-        mostrarMensaje('Jugador no encontrado en la base de datos', 'danger');
+        // Mostrar formulario para agregar jugador manualmente
+        const formContainer = document.createElement('div');
+        formContainer.className = 'alert alert-warning mt-2';
+        formContainer.id = `manual-entry-${dni}`;
+        formContainer.innerHTML = `
+            <h5>Jugador no encontrado</h5>
+            <p>Complete los datos para agregar el jugador manualmente:</p>
+            <div class="mb-3">
+                <label class="form-label">Nombre completo</label>
+                <input type="text" class="form-control" id="manual-name-${dni}" required>
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Año de nacimiento</label>
+                <input type="number" class="form-control" id="manual-birth-${dni}" 
+                       min="1900" max="${new Date().getFullYear()}" required>
+            </div>
+            <div class="d-flex justify-content-end gap-2">
+                <button class="btn btn-secondary" onclick="document.getElementById('manual-entry-${dni}').remove()">
+                    Cancelar
+                </button>
+                <button class="btn btn-primary" onclick="agregarJugadorManual('${equipo}', '${dni}')">
+                    Agregar Jugador
+                </button>
+            </div>
+        `;
+
+        // Remover formulario previo si existe
+        const prevForm = document.getElementById(`manual-entry-${dni}`);
+        if (prevForm) prevForm.remove();
+        
+        // Insertar nuevo formulario
+        dniInput.parentElement.after(formContainer);
     }
+}
+
+function agregarJugadorManual(equipo, dni) {
+    const nameInput = document.getElementById(`manual-name-${dni}`);
+    const birthInput = document.getElementById(`manual-birth-${dni}`);
+    //const descriptorInput = document.getElementById(`manual-descriptor-${dni}`);
+
+    if (!nameInput.value || !birthInput.value) {
+        mostrarMensaje('Por favor complete los campos requeridos', 'warning');
+        return;
+    }
+
+    const jugadorManual = {
+        dni: dni,
+        name: nameInput.value,
+        birthYear: parseInt(birthInput.value),
+        descriptor: '',
+        team_id: null // No asociado a ningún equipo específico
+    };
+
+    // Agregar jugador
+    agregarJugador(equipo, jugadorManual);
+
+    // Remover formulario
+    document.getElementById(`manual-entry-${dni}`).remove();
+
+    // Limpiar input DNI
+    document.getElementById(`${equipo}PlayerDNI`).value = '';
+
+    mostrarMensaje('Jugador agregado manualmente', 'success');
 }
 
 function confirmarAgregarJugador(equipo, dni) {
